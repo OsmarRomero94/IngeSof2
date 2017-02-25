@@ -1,0 +1,2 @@
+creacion del primer proyecto
+El proyecto myfirtsapp fue creado hasta la segunda actividad, prueben en sus dispositivos si les funciona
