@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "387945282198",
+    "project_id": "firebase-appubuntu"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:387945282198:android:abc41ed91504f4a8",
+        "android_client_info": {
+          "package_name": "pol.com.apppol"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "387945282198-rlk5tjtcdp7nm9jesn0k1fruvdrna5u5.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "387945282198-ml03qdmnjri0dcq7g1t8qnenujmr2si5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pol.com.apppol",
+            "certificate_hash": "781f13313c8002a4e8871747d483819fb3150cb4"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaj0HzahTznHZm5ExWlkPhM6U-PfU8AHE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
