@@ -12,19 +12,18 @@
         <activity android:name=".SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".hijodetalle.HijoDetalleActivity"
             android:label="@string/title_activity_hijo_detalle"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".hijo.HijoActivity"
             android:label="@string/title_activity_hijo"
             android:theme="@style/AppTheme.NoActionBar">
-
         </activity>
     </application>
 

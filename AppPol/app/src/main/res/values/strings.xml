@@ -25,7 +25,7 @@
     <!-- signinActivity-->
     <string name="sign_out">SIGUIENTE</string>
     <string name="revocar">DESCONECTAR</string>
-    <string name="title_text">Libreta FPUNA</string>
+    <string name="title_text">Libreta FP-UNA</string>
 
     <!-- Sign-in status messages -->
     <string name="signed_in_fmt">Signed in as: %s</string>
