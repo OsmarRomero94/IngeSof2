@@ -18,13 +18,13 @@ public class Hijo {
     private String bio;
     private String avatarUri;
 
-    public Hijo(String name,
-                  String birth, String phoneNumber,
+    public Hijo(String id, String name,
+                  String birth, String sex,
                   String bio, String avatarUri) {
-        this.id = UUID.randomUUID().toString();
+        this.id = id;
         this.name = name;
         this.birth = birth;
-        this.sex = phoneNumber;
+        this.sex = sex;
         this.bio = bio;
         this.avatarUri = avatarUri;
     }

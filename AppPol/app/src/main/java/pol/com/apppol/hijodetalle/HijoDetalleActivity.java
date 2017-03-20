@@ -1,10 +1,13 @@
 package pol.com.apppol.hijodetalle;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.View;
 
+import pol.com.apppol.MostrarVacunas;
 import pol.com.apppol.R;
 import pol.com.apppol.hijo.HijoActivity;
 
@@ -43,4 +46,12 @@ public class HijoDetalleActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
+    public void siguiente (View v){
+
+        Intent intento = new Intent(this, MostrarVacunas.class);
+        //intento.putExtra("parametro",posi);
+        startActivity(intento);
+
+    }
+
 }

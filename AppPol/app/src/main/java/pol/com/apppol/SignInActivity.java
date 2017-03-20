@@ -19,6 +19,7 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import pol.com.apppol.data.Hijo;
 import pol.com.apppol.hijo.HijoActivity;
 
 /**

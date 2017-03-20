@@ -6,16 +6,32 @@ android:layout_marginLeft="72dp"
 android:layout_marginRight="@dimen/activity_horizontal_margin"
 android:orientation="vertical">
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    android:layout_marginTop="@dimen/activity_vertical_margin"
-    android:text="Sexo"
-    android:textColor="?colorPrimary" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="Id"
+        android:textColor="?colorPrimary" />
 
-<TextView
-    android:id="@+id/tv_phone_number"
+    <TextView
+        android:id="@+id/tv_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="numero" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="Sexo"
+        android:textColor="?colorPrimary" />
+
+    <TextView
+    android:id="@+id/tv_sex"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -50,5 +66,15 @@ android:orientation="vertical">
     android:layout_height="wrap_content"
     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
     tools:text="Alergico" />
+
+
+
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="siguiente"
+        android:text="Button" />
 
 </LinearLayout>

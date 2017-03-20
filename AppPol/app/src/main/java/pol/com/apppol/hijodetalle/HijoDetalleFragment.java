@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import pol.com.apppol.MostrarVacunas;
 import pol.com.apppol.R;
 import pol.com.apppol.data.Hijo;
 import pol.com.apppol.data.HijoDbHelper;
@@ -31,11 +32,12 @@ import pol.com.apppol.hijo.HijoFragment;
 public class HijoDetalleFragment extends Fragment {
     private static final String ARG_LAWYER_ID = "lawyerId";
 
-    private String mLawyerId;
+    private TextView mLawyerId;
+    private String  mId;
 
     private CollapsingToolbarLayout mCollapsingView;
     private ImageView mAvatar;
-    private TextView mPhoneNumber;
+    private TextView mSex;
     private TextView mSpecialty;
     private TextView mBio;
 
@@ -59,7 +61,7 @@ public class HijoDetalleFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mLawyerId = getArguments().getString(ARG_LAWYER_ID);
+            mId = getArguments().getString(ARG_LAWYER_ID);
         }
 
         setHasOptionsMenu(true);
@@ -71,7 +73,8 @@ public class HijoDetalleFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_hijo_detalle, container, false);
         mCollapsingView = (CollapsingToolbarLayout) getActivity().findViewById(R.id.toolbar_layout);
         mAvatar = (ImageView) getActivity().findViewById(R.id.iv_avatar);
-        mPhoneNumber = (TextView) root.findViewById(R.id.tv_phone_number);
+        mLawyerId = (TextView) root.findViewById(R.id.tv_id);
+        mSex = (TextView) root.findViewById(R.id.tv_sex);
         mSpecialty = (TextView) root.findViewById(R.id.tv_specialty);
         mBio = (TextView) root.findViewById(R.id.tv_bio);
 
@@ -102,7 +105,8 @@ public class HijoDetalleFragment extends Fragment {
                 .load(Uri.parse("file:///android_asset/" + hijo.getAvatarUri()))
                 .centerCrop()
                 .into(mAvatar);
-        mPhoneNumber.setText(hijo.getSex());
+        mLawyerId.setText(hijo.getId());
+        mSex.setText(hijo.getSex());
         mSpecialty.setText(hijo.getBirth());
         mBio.setText(hijo.getBio());
     }
@@ -112,16 +116,11 @@ public class HijoDetalleFragment extends Fragment {
                 "Error al cargar información", Toast.LENGTH_SHORT).show();
     }
 
-    private void showDeleteError() {
-        Toast.makeText(getActivity(),
-                "Error al eliminar abogado", Toast.LENGTH_SHORT).show();
-    }
-
     private class GetLawyerByIdTask extends AsyncTask<Void, Void, Cursor> {
 
         @Override
         protected Cursor doInBackground(Void... voids) {
-            return mLawyersDbHelper.getLawyerById(mLawyerId);
+            return mLawyersDbHelper.getLawyerById(mId);
         }
 
         @Override
@@ -133,4 +132,5 @@ public class HijoDetalleFragment extends Fragment {
             }
         }
     }
+
 }
