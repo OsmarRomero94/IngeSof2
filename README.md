@@ -7,7 +7,6 @@ Junior Godoy
 
 Proyecto Aplicacion
 
-hecho en ubuntu 16.04.2 lts
-android studio 162
+Hecho en Android Studio 2.3
 
-Api 14 4.0 (menor)
+Api 14 Android 4.0 (menor)
