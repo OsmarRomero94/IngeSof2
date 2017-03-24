@@ -1,6 +1,5 @@
 package pol.com.apppol.hijodetalle;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,10 +17,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import pol.com.apppol.MostrarVacunas;
 import pol.com.apppol.R;
 import pol.com.apppol.data.Hijo;
-import pol.com.apppol.data.HijoDbHelper;
+import pol.com.apppol.data.DbHelper;
 import pol.com.apppol.hijo.HijoFragment;
 
 /**
@@ -29,6 +27,7 @@ import pol.com.apppol.hijo.HijoFragment;
  * Use the {@link HijoDetalleFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
 public class HijoDetalleFragment extends Fragment {
     private static final String ARG_LAWYER_ID = "lawyerId";
 
@@ -41,7 +40,7 @@ public class HijoDetalleFragment extends Fragment {
     private TextView mSpecialty;
     private TextView mBio;
 
-    private HijoDbHelper mLawyersDbHelper;
+    private DbHelper mLawyersDbHelper;
 
 
     public HijoDetalleFragment() {
@@ -49,7 +48,7 @@ public class HijoDetalleFragment extends Fragment {
     }
 
     public static HijoDetalleFragment newInstance(String lawyerId) {
-       HijoDetalleFragment fragment = new HijoDetalleFragment();
+        HijoDetalleFragment fragment = new HijoDetalleFragment();
         Bundle args = new Bundle();
         args.putString(ARG_LAWYER_ID, lawyerId);
         fragment.setArguments(args);
@@ -59,11 +58,9 @@ public class HijoDetalleFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
             mId = getArguments().getString(ARG_LAWYER_ID);
         }
-
         setHasOptionsMenu(true);
     }
 
@@ -77,11 +74,8 @@ public class HijoDetalleFragment extends Fragment {
         mSex = (TextView) root.findViewById(R.id.tv_sex);
         mSpecialty = (TextView) root.findViewById(R.id.tv_specialty);
         mBio = (TextView) root.findViewById(R.id.tv_bio);
-
-        mLawyersDbHelper = new HijoDbHelper(getActivity());
-
+        mLawyersDbHelper = new DbHelper(getActivity(), "Hijo.db", null, 1);
         loadLawyer();
-
         return root;
     }
 
@@ -102,13 +96,14 @@ public class HijoDetalleFragment extends Fragment {
     private void showLawyer(Hijo hijo) {
         mCollapsingView.setTitle(hijo.getName());
         Glide.with(this)
-                .load(Uri.parse("file:///android_asset/" + hijo.getAvatarUri()))
+                .load(Uri.parse(hijo.getAvatarUri()))
                 .centerCrop()
                 .into(mAvatar);
-        mLawyerId.setText(hijo.getId());
         mSex.setText(hijo.getSex());
         mSpecialty.setText(hijo.getBirth());
         mBio.setText(hijo.getBio());
+        String captura = (hijo.getId());
+        mLawyerId.setText(captura);
     }
 
     private void showLoadError() {
@@ -117,7 +112,6 @@ public class HijoDetalleFragment extends Fragment {
     }
 
     private class GetLawyerByIdTask extends AsyncTask<Void, Void, Cursor> {
-
         @Override
         protected Cursor doInBackground(Void... voids) {
             return mLawyersDbHelper.getLawyerById(mId);
@@ -132,5 +126,4 @@ public class HijoDetalleFragment extends Fragment {
             }
         }
     }
-
 }

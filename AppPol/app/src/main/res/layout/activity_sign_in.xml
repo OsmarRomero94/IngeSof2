@@ -13,24 +13,28 @@
         android:layout_height="0dp"
         android:layout_weight="3"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="1">
+
+
 
         <ImageView
             android:id="@+id/google_icon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="213dp"
+            android:layout_height="200dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="@dimen/g_top_margin"
-            android:contentDescription="@string/desc_google_icon"
-            android:src="@drawable/ic_launcher_big" />
+            android:layout_marginTop="40dp"
+
+            android:src="@drawable/fondo"
+            android:layout_weight="0.29" />
 
         <TextView
             android:id="@+id/title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="@string/title_text"
             android:gravity="center"
+            android:text="@string/title_text"
             android:textColor="@android:color/white"
             android:textSize="36sp" />
 
@@ -39,6 +43,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/signed_out"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+        <TextView
+            android:id="@+id/correo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
@@ -53,7 +64,7 @@
             android:scrollbars="vertical"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
-
+        <!--
         <Button
             android:id="@+id/button_optional_action"
             style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
@@ -61,8 +72,8 @@
             android:layout_height="wrap_content"
             android:visibility="gone"
             tools:text="Optional Action"
-            tools:visibility="visible" />
-
+            tools:visibility="visible" />*/
+        -->
     </LinearLayout>
 
 
@@ -77,8 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="visible"
-            tools:visibility="gone" />
+             />
 
         <LinearLayout
             android:id="@+id/sign_out_and_disconnect"

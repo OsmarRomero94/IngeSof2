@@ -3,11 +3,10 @@ package pol.com.apppol.data;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import pol.com.apppol.data.HijoContract.HijoEntry;
+import pol.com.apppol.data.EstructuraHijo.HijoEntry;
 
-import java.util.UUID;
 /**
- * Created by Romero on 17/03/2017.
+ * Clase hijo, cursor y getters
  */
 
 public class Hijo {

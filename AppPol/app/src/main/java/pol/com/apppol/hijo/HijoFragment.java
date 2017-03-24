@@ -11,13 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import pol.com.apppol.R;
-import pol.com.apppol.data.HijoDbHelper;
+import pol.com.apppol.data.DbHelper;
 import pol.com.apppol.hijodetalle.HijoDetalleActivity;
 
-import static pol.com.apppol.data.HijoContract.HijoEntry;
+import static pol.com.apppol.data.EstructuraHijo.HijoEntry;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,12 +26,8 @@ import static pol.com.apppol.data.HijoContract.HijoEntry;
 public class HijoFragment extends Fragment {
     public static final int REQUEST_UPDATE_DELETE_LAWYER = 2;
 
-    private HijoDbHelper mLawyersDbHelper;
-
-    private ListView mLawyersList;
+    private DbHelper mLawyersDbHelper;
     private HijoCursorAdapter mLawyersAdapter;
-    //private FloatingActionButton mAddButton;
-
 
     public HijoFragment() {
         // Required empty public constructor
@@ -43,46 +38,29 @@ public class HijoFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_hijo, container, false);
-
         // Referencias UI
-        mLawyersList = (ListView) root.findViewById(R.id.hijo_list);
+        ListView mLawyersList = (ListView) root.findViewById(R.id.hijo_list);
         mLawyersAdapter = new HijoCursorAdapter(getActivity(), null);
-        //mAddButton = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-
         // Setup
         mLawyersList.setAdapter(mLawyersAdapter);
-
         // Eventos
         mLawyersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Cursor currentItem = (Cursor) mLawyersAdapter.getItem(i);
-                String currentLawyerId = currentItem.getString(
-                        currentItem.getColumnIndex(HijoEntry.ID));
-
+                String currentLawyerId = currentItem.getString(currentItem.getColumnIndex(HijoEntry.ID));
                 showDetailScreen(currentLawyerId);
             }
         });
-        /*
-        mAddButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //showAddScreen();
-            }
-        });
-        */
-
-        getActivity().deleteDatabase(HijoDbHelper.DATABASE_NAME);
-
+        //
+        getActivity().deleteDatabase(DbHelper.DATABASE_NAME);
         // Instancia de helper
-        mLawyersDbHelper = new HijoDbHelper(getActivity());
-
+        mLawyersDbHelper = new DbHelper(getActivity(), "Hijo.db", null, 1);
         // Carga de datos
         loadLawyers();
-
+        //
         return root;
     }
 
@@ -101,16 +79,6 @@ public class HijoFragment extends Fragment {
         new LawyersLoadTask().execute();
     }
 
-    private void showSuccessfullSavedMessage() {
-        Toast.makeText(getActivity(),
-                "Abogado guardado correctamente", Toast.LENGTH_SHORT).show();
-    }
-    /*
-    private void showAddScreen() {
-        Intent intent = new Intent(getActivity(), AddEditLawyerActivity.class);
-        startActivityForResult(intent, AddEditLawyerActivity.REQUEST_ADD_LAWYER);
-    }
-    */
     private void showDetailScreen(String lawyerId) {
         Intent intent = new Intent(getActivity(), HijoDetalleActivity.class);
         intent.putExtra(HijoActivity.EXTRA_LAWYER_ID, lawyerId);
@@ -118,7 +86,6 @@ public class HijoFragment extends Fragment {
     }
 
     private class LawyersLoadTask extends AsyncTask<Void, Void, Cursor> {
-
         @Override
         protected Cursor doInBackground(Void... voids) {
             return mLawyersDbHelper.getAllLawyers();
@@ -128,12 +95,7 @@ public class HijoFragment extends Fragment {
         protected void onPostExecute(Cursor cursor) {
             if (cursor != null && cursor.getCount() > 0) {
                 mLawyersAdapter.swapCursor(cursor);
-            } else {
-                // Mostrar empty state
             }
         }
     }
-
-
-
 }

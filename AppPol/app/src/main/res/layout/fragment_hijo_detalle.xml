@@ -68,13 +68,11 @@ android:orientation="vertical">
     tools:text="Alergico" />
 
 
-
-
     <Button
         android:id="@+id/button2"
-        android:layout_width="match_parent"
+        android:layout_width="175dp"
         android:layout_height="wrap_content"
-        android:onClick="siguiente"
-        android:text="Button" />
+        android:onClick="siguiente1"
+        android:text="Mostrar Vacunas" />
 
 </LinearLayout>

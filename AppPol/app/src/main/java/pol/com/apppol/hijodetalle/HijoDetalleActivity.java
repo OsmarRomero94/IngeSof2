@@ -12,18 +12,19 @@ import pol.com.apppol.R;
 import pol.com.apppol.hijo.HijoActivity;
 
 public class HijoDetalleActivity extends AppCompatActivity {
+    public String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hijo_detalle);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //No modificar el warning
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        String id = getIntent().getStringExtra(HijoActivity.EXTRA_LAWYER_ID);
-
-        HijoDetalleFragment fragment = (HijoDetalleFragment)
-                getSupportFragmentManager().findFragmentById(R.id.hijo_detalle_container);
+        //Captura el id del hijo desde la clase HijoActivity
+        id = getIntent().getStringExtra(HijoActivity.EXTRA_LAWYER_ID);
+        //
+        HijoDetalleFragment fragment = (HijoDetalleFragment) getSupportFragmentManager().findFragmentById(R.id.hijo_detalle_container);
         if (fragment == null) {
             fragment = HijoDetalleFragment.newInstance(id);
             getSupportFragmentManager()
@@ -31,8 +32,6 @@ public class HijoDetalleActivity extends AppCompatActivity {
                     .add(R.id.hijo_detalle_container, fragment)
                     .commit();
         }
-
-
     }
 
     @Override
@@ -46,12 +45,11 @@ public class HijoDetalleActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-    public void siguiente (View v){
 
+    public void siguiente1 (View v){
         Intent intento = new Intent(this, MostrarVacunas.class);
-        //intento.putExtra("parametro",posi);
+        intento.putExtra("parametro", id);
         startActivity(intento);
-
     }
 
 }

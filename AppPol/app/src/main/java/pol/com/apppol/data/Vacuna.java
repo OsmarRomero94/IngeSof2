@@ -1,11 +1,10 @@
 package pol.com.apppol.data;
 
 import android.content.ContentValues;
-import android.database.Cursor;
 import pol.com.apppol.data.EstructuraVac.VacunaEntry;
 
 /**
- * Created by christiancs on 20/03/17.
+ * Clase vacuna, getters y setters
  */
 
 public class Vacuna {
@@ -17,12 +16,15 @@ public class Vacuna {
     private String lote;
     private String nombre_medico;
     private String descripcion;
-    private int id_hijo;
+    private String id_hijo;
     private int aplicada;
 
-    public Vacuna (){}
+    public Vacuna (){
+        //Empty
+    }
 
-    public Vacuna(int id_vacuna, String nombre, int dosis, int edad, String fecha, String lote, String nombre_medico, String descripcion, int id_hijo, int aplicada) {
+    public Vacuna(int id_vacuna, String nombre, int dosis, int edad, String fecha, String lote,
+                  String nombre_medico, String descripcion, String id_hijo, int aplicada) {
         this.id_vacuna = id_vacuna;
         this.nombre = nombre;
         this.dosis = dosis;
@@ -33,20 +35,6 @@ public class Vacuna {
         this.descripcion = descripcion;
         this.id_hijo = id_hijo;
         this.aplicada=aplicada;
-    }
-
-    public Vacuna(Cursor cursor) {
-        id_vacuna = cursor.getInt(cursor.getColumnIndex(VacunaEntry.ID));
-        nombre = cursor.getString(cursor.getColumnIndex(VacunaEntry.NOMBRE));
-        dosis = cursor.getInt(cursor.getColumnIndex(VacunaEntry.DOSIS));
-        edad= cursor.getInt(cursor.getColumnIndex(VacunaEntry.EDAD));
-        fecha = cursor.getString(cursor.getColumnIndex(VacunaEntry.FECHA));
-        lote = cursor.getString(cursor.getColumnIndex(VacunaEntry.LOTE));
-        nombre_medico = cursor.getString(cursor.getColumnIndex(VacunaEntry.NOMBRE_MEDICO));
-        descripcion = cursor.getString(cursor.getColumnIndex(VacunaEntry.DESCRIPCION));
-        id_hijo = cursor.getInt(cursor.getColumnIndex(VacunaEntry.ID_HIJO));
-        aplicada= cursor.getInt(cursor.getColumnIndex(VacunaEntry.APLICADA));
-
     }
 
     public ContentValues toContentValues() {
@@ -64,11 +52,11 @@ public class Vacuna {
 
         return values;
     }
-    public int getId_hijo() {
+    public String getId_hijo() {
         return id_hijo;
     }
 
-    public void setId_hijo(int id_hijo) {
+    public void setId_hijo(String id_hijo) {
         this.id_hijo = id_hijo;
     }
 
@@ -89,7 +77,6 @@ public class Vacuna {
     }
 
     public String getLote() {
-
         return lote;
     }
 
@@ -162,5 +149,4 @@ public class Vacuna {
                 ", id_hijo=" + id_hijo +
                 '}';
     }
-
 }
