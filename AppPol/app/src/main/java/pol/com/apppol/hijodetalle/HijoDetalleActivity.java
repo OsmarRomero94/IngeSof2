@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.View;
 
 import pol.com.apppol.MostrarVacunas;
@@ -13,6 +12,7 @@ import pol.com.apppol.hijo.HijoActivity;
 
 public class HijoDetalleActivity extends AppCompatActivity {
     public String id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,22 +34,17 @@ public class HijoDetalleActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_hijo_detalle, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
-    }
-
-    public void siguiente1 (View v){
+    //Hace que el boton Mostrar Vacunas te mande a la siguiente actividad (MostrarVacunas)
+    public void mostrarVacunas (View v){
         Intent intento = new Intent(this, MostrarVacunas.class);
         intento.putExtra("parametro", id);
         startActivity(intento);
     }
 
+    //Hace que el boton de flechita atras de arriba te mande a la actividad anterior (HijoActivity)
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }

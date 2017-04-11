@@ -135,8 +135,8 @@ public class SignInActivity extends AppCompatActivity implements
 
     // [START signOut]
     private void signOut() {
+        //Boton Siguiente, va a la actividad HijoActivity
         Intent intent = new Intent(this, HijoActivity.class);
-
         startActivity(intent);
     }
     // [END signOut]

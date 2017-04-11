@@ -17,6 +17,7 @@ public class Vacuna {
     private String nombre_medico;
     private String descripcion;
     private String id_hijo;
+    private String mes;
     private int aplicada;
 
     public Vacuna (){
@@ -24,7 +25,7 @@ public class Vacuna {
     }
 
     public Vacuna(int id_vacuna, String nombre, int dosis, int edad, String fecha, String lote,
-                  String nombre_medico, String descripcion, String id_hijo, int aplicada) {
+                  String nombre_medico, String descripcion, String id_hijo, String mes, int aplicada) {
         this.id_vacuna = id_vacuna;
         this.nombre = nombre;
         this.dosis = dosis;
@@ -34,6 +35,7 @@ public class Vacuna {
         this.nombre_medico = nombre_medico;
         this.descripcion = descripcion;
         this.id_hijo = id_hijo;
+        this.mes = mes;
         this.aplicada=aplicada;
     }
 
@@ -48,6 +50,7 @@ public class Vacuna {
         values.put(VacunaEntry.NOMBRE_MEDICO,nombre_medico);
         values.put(VacunaEntry.DESCRIPCION,descripcion);
         values.put(VacunaEntry.ID_HIJO,id_hijo);
+        values.put(VacunaEntry.MES,mes);
         values.put(VacunaEntry.APLICADA,aplicada);
 
         return values;

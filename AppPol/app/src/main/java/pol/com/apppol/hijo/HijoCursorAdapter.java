@@ -40,10 +40,11 @@ public class HijoCursorAdapter extends CursorAdapter{
         TextView nameText = (TextView) view.findViewById(R.id.tv_name);
         final ImageView avatarImage = (ImageView) view.findViewById(R.id.iv_avatar);
         // Get valores.
-        String name = cursor.getString(cursor.getColumnIndex(HijoEntry.NAME));
-        String avatarUri = cursor.getString(cursor.getColumnIndex(HijoEntry.AVATAR_URI));
+        String name = cursor.getString(cursor.getColumnIndex(HijoEntry.NOMBRE));
+        String ape = cursor.getString(cursor.getColumnIndex(HijoEntry.APELLIDO));
+        String avatarUri = cursor.getString(cursor.getColumnIndex(HijoEntry.AVA_URI));
         // Setup.
-        nameText.setText(name);
+        nameText.setText(name+" "+ape);
         Glide
                 .with(context)
                 .load(Uri.parse("file:///android_asset/" + avatarUri))

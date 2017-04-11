@@ -27,6 +27,7 @@ public class MostrarVacunas extends AppCompatActivity implements AdapterView.OnI
     protected TableLayout tab;
     Tabla tabla;
     String id_hijo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,13 +79,13 @@ public class MostrarVacunas extends AppCompatActivity implements AdapterView.OnI
         if(position!=0) {
             DbHelper x = new DbHelper(getApplicationContext(), "Hijo.db", null, 1);
             //No modificar el warning
-            elemento = x.llenar_lv(position,id_hijo);
+            elemento = x.llenar_lv(position, id_hijo);
             //
             int tamano = elemento.size();
             tabla.agregarCabecera(R.array.cabecera_tabla);
             for (int i = 0; i < tamano; i++) {
                 ArrayList<String> elementos = new ArrayList<>();
-                elementos.add(Integer.toString(elemento.get(i).getId_vacuna()));
+                //elementos.add(Integer.toString(elemento.get(i).getId_vacuna()));
                 elementos.add(elemento.get(i).getNombre());
                 elementos.add(elemento.get(i).getFecha());
                 //

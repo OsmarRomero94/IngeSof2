@@ -6,6 +6,15 @@ android:layout_marginLeft="72dp"
 android:layout_marginRight="@dimen/activity_horizontal_margin"
 android:orientation="vertical">
 
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:onClick="mostrarVacunas"
+        android:text="Mostrar Vacunas"
+    />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,7 +28,53 @@ android:orientation="vertical">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        tools:text="numero" />
+        tools:text="identificador" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="Fecha de nacimiento"
+        android:textColor="?colorPrimary" />
+
+    <TextView
+        android:id="@+id/tv_fecha_nac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="dia/mes/año" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="Lugar Nacimiento"
+        android:textColor="?colorPrimary" />
+
+    <TextView
+        android:id="@+id/tv_lugar_nac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="Donde nacio" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="Domicilio"
+        android:textColor="?colorPrimary" />
+
+    <TextView
+        android:id="@+id/tv_domic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="Donde vive" />
 
     <TextView
         android:id="@+id/textView2"
@@ -31,48 +86,9 @@ android:orientation="vertical">
         android:textColor="?colorPrimary" />
 
     <TextView
-    android:id="@+id/tv_sex"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-    tools:text="M" />
-
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    android:layout_marginTop="@dimen/activity_vertical_margin"
-    android:text="Fecha de nacimiento"
-    android:textColor="?colorPrimary" />
-
-<TextView
-    android:id="@+id/tv_specialty"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-    tools:text="14/06/94" />
-
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    android:layout_marginTop="@dimen/activity_vertical_margin"
-    android:text="Anotacinoes extras"
-    android:textColor="?colorPrimary" />
-
-<TextView
-    android:id="@+id/tv_bio"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-    tools:text="Alergico" />
-
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="175dp"
+        android:id="@+id/tv_sex"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="siguiente1"
-        android:text="Mostrar Vacunas" />
-
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="M" />
 </LinearLayout>

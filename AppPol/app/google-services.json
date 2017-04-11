@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "387945282198",
-    "project_id": "firebase-appubuntu"
+    "project_number": "265071839233",
+    "project_id": "firebase-apppolwindows"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:387945282198:android:abc41ed91504f4a8",
+        "mobilesdk_app_id": "1:265071839233:android:abc41ed91504f4a8",
         "android_client_info": {
           "package_name": "pol.com.apppol"
         }
       },
       "oauth_client": [
         {
-          "client_id": "387945282198-rlk5tjtcdp7nm9jesn0k1fruvdrna5u5.apps.googleusercontent.com",
+          "client_id": "265071839233-mptim43pfk1j13142l9puv0f764pfuh3.apps.googleusercontent.com",
           "client_type": 3
         },
         {
-          "client_id": "387945282198-ml03qdmnjri0dcq7g1t8qnenujmr2si5.apps.googleusercontent.com",
+          "client_id": "265071839233-2m89p7quo0m1tdmakjq0keqc1afcs63d.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "pol.com.apppol",
-            "certificate_hash": "781f13313c8002a4e8871747d483819fb3150cb4"
+            "certificate_hash": "a01b6092db303fe16b45f0b33b2cedd6edc9de0d"
           }
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCaj0HzahTznHZm5ExWlkPhM6U-PfU8AHE"
+          "current_key": "AIzaSyCZfRbpBaOHllJ4O2c6F64MHlrUOrg9y1g"
         }
       ],
       "services": {

@@ -2,9 +2,11 @@ package pol.com.apppol.hijo;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +14,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+
+import pol.com.apppol.Notificaciones;
 import pol.com.apppol.R;
+import pol.com.apppol.Utilidades;
 import pol.com.apppol.data.DbHelper;
+import pol.com.apppol.data.Hijo;
 import pol.com.apppol.hijodetalle.HijoDetalleActivity;
 
 import static pol.com.apppol.data.EstructuraHijo.HijoEntry;
@@ -59,9 +68,94 @@ public class HijoFragment extends Fragment {
         // Instancia de helper
         mLawyersDbHelper = new DbHelper(getActivity(), "Hijo.db", null, 1);
         // Carga de datos
-        loadLawyers();
-        //
+        loadHijos();
+        //Crea las notificaciones solo la primera vez que corre la aplicacion
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        if (!prefs.getBoolean("firstTime", false)) {
+            // <---- run your one time code here
+            loadNotificaciones();
+            // mark first time has runned.
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("firstTime", true);
+            editor.apply();
+        }
         return root;
+    }
+
+    private void loadNotificaciones() {
+        Utilidades util = new Utilidades();
+
+        Cursor cursor = DbHelper.getHijoById("1");
+        ArrayList<Integer> meses = getMesesNoAplicados("1");
+        cursor.moveToFirst();
+        Hijo hijo = new Hijo(cursor);
+        for (int i = 0; i < meses.size(); i++) {
+            String fecha = util.calcularFechaAAplicar(hijo.getFecha_nacimiento(), meses.get(i));
+            new Notificaciones(getActivity(),
+                    util.calcularNotificacion(fecha),
+                    hijo.getId(),
+                    hijo.getNombre() + " " + hijo.getApellido(),
+                    meses.get(i));
+        }
+        cursor.close();
+
+        cursor = DbHelper.getHijoById("2");
+        meses = getMesesNoAplicados("2");
+        cursor.moveToFirst();
+        hijo = new Hijo(cursor);
+        for (int i = 0; i < meses.size(); i++) {
+            String fecha = util.calcularFechaAAplicar(hijo.getFecha_nacimiento(), meses.get(i));
+            new Notificaciones(getActivity(),
+                    util.calcularNotificacion(fecha),
+                    hijo.getId(),
+                    hijo.getNombre() + " " + hijo.getApellido(),
+                    meses.get(i));
+        }
+        cursor.close();
+
+        cursor = DbHelper.getHijoById("3");
+        meses = getMesesNoAplicados("3");
+        cursor.moveToFirst();
+        hijo = new Hijo(cursor);
+        for (int i = 0; i < meses.size(); i++) {
+            String fecha = util.calcularFechaAAplicar(hijo.getFecha_nacimiento(), meses.get(i));
+            new Notificaciones(getActivity(),
+                    util.calcularNotificacion(fecha),
+                    hijo.getId(),
+                    hijo.getNombre() + " " + hijo.getApellido(),
+                    meses.get(i));
+        }
+        cursor.close();
+
+        cursor = DbHelper.getHijoById("4");
+        meses = getMesesNoAplicados("4");
+        cursor.moveToFirst();
+        hijo = new Hijo(cursor);
+        for (int i = 0; i < meses.size(); i++) {
+            String fecha = util.calcularFechaAAplicar(hijo.getFecha_nacimiento(), meses.get(i));
+            new Notificaciones(getActivity(),
+                    util.calcularNotificacion(fecha),
+                    hijo.getId(),
+                    hijo.getNombre() + " " + hijo.getApellido(),
+                    meses.get(i));
+        }
+        cursor.close();
+    }
+
+    private ArrayList<Integer> getMesesNoAplicados(String idHijo) {
+        Cursor cursor = DbHelper.getNoAplicadas(idHijo);
+        ArrayList<Integer> lista = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                lista.add(cursor.getInt(8));
+            } while (cursor.moveToNext());
+        }
+        HashSet<Integer> hs = new HashSet<>(lista);
+        lista.clear();
+        lista.addAll(hs);
+
+        Collections.sort(lista);
+        return lista;
     }
 
     @Override
@@ -69,14 +163,14 @@ public class HijoFragment extends Fragment {
         if (Activity.RESULT_OK == resultCode) {
             switch (requestCode) {
                 case REQUEST_UPDATE_DELETE_LAWYER:
-                    loadLawyers();
+                    loadHijos();
                     break;
             }
         }
     }
 
-    private void loadLawyers() {
-        new LawyersLoadTask().execute();
+    private void loadHijos() {
+        new HijosLoadTask().execute();
     }
 
     private void showDetailScreen(String lawyerId) {
@@ -85,10 +179,10 @@ public class HijoFragment extends Fragment {
         startActivityForResult(intent, REQUEST_UPDATE_DELETE_LAWYER);
     }
 
-    private class LawyersLoadTask extends AsyncTask<Void, Void, Cursor> {
+    private class HijosLoadTask extends AsyncTask<Void, Void, Cursor> {
         @Override
         protected Cursor doInBackground(Void... voids) {
-            return mLawyersDbHelper.getAllLawyers();
+            return mLawyersDbHelper.getAllHijos();
         }
 
         @Override
@@ -98,4 +192,6 @@ public class HijoFragment extends Fragment {
             }
         }
     }
+
+
 }

@@ -2,7 +2,7 @@
 <resources>
     <!--Array con los valores de la cabecera de la tabla-->
     <string-array name="cabecera_tabla">
-        <item>ID Vacuna</item>
+       <!-- <item>ID Vacuna</item>-->
         <item>Nombre Vacuna</item>
         <item>Fecha a Aplicar</item>
         <item>Aplicada</item>

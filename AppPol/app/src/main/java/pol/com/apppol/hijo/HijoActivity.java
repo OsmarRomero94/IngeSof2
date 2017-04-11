@@ -15,8 +15,7 @@ public class HijoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hijo);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        HijoFragment fragment = (HijoFragment)
-                getSupportFragmentManager().findFragmentById(R.id.hijo_container);
+        HijoFragment fragment = (HijoFragment) getSupportFragmentManager().findFragmentById(R.id.hijo_container);
         //
         if (fragment == null) {
             fragment = HijoFragment.newInstance();
