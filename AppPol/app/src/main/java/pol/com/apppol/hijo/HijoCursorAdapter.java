@@ -38,13 +38,22 @@ public class HijoCursorAdapter extends CursorAdapter{
     public void bindView(View view, final Context context, Cursor cursor) {
         // Referencias UI.
         TextView nameText = (TextView) view.findViewById(R.id.tv_name);
+        TextView fechaText = (TextView) view.findViewById(R.id.tv_fecha);
         final ImageView avatarImage = (ImageView) view.findViewById(R.id.iv_avatar);
         // Get valores.
         String name = cursor.getString(cursor.getColumnIndex(HijoEntry.NOMBRE));
         String ape = cursor.getString(cursor.getColumnIndex(HijoEntry.APELLIDO));
-        String avatarUri = cursor.getString(cursor.getColumnIndex(HijoEntry.AVA_URI));
+        String nacimiento = cursor.getString(cursor.getColumnIndex(HijoEntry.FECHA_NACIMIENTO));
+        String sexo = cursor.getString(cursor.getColumnIndex(HijoEntry.SEXO));
+        String avatarUri;
+        if (sexo.equals("M")){
+            avatarUri = "hombre.png";
+        } else {
+            avatarUri = "mujer.png";
+        }
         // Setup.
         nameText.setText(name+" "+ape);
+        fechaText.setText(nacimiento);
         Glide
                 .with(context)
                 .load(Uri.parse("file:///android_asset/" + avatarUri))
@@ -54,8 +63,7 @@ public class HijoCursorAdapter extends CursorAdapter{
                 .into(new BitmapImageViewTarget(avatarImage) {
                     @Override
                     protected void setResource(Bitmap resource) {
-                        RoundedBitmapDrawable drawable
-                                = RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+                        RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(context.getResources(), resource);
                         drawable.setCircular(true);
                         avatarImage.setImageDrawable(drawable);
                     }

@@ -19,7 +19,6 @@ public class EstructuraVac {
         public static final String NOMBRE_MEDICO = "nombre_medico";
         public static final String DESCRIPCION = "descripcion";
         public static final String ID_HIJO = "id_hijo";
-        public static final String MES = "mes";
         public static final String APLICADA = "aplicada";
     }
 }

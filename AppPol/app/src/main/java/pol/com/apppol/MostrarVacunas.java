@@ -52,7 +52,7 @@ public class MostrarVacunas extends AppCompatActivity implements AdapterView.OnI
         aux.setPosicion(3);
         listita.add(aux);
         aux=new Filtro();
-        aux.setNombre("Por Fecha");
+        aux.setNombre("Por fecha");
         aux.setPosicion(4);
         listita.add(aux);
         //Creacion del spinner

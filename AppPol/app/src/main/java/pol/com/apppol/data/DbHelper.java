@@ -42,7 +42,6 @@ public class DbHelper extends SQLiteOpenHelper{
                             + HijoEntry.TELEFONO_CONTACTO + " TEXT NOT NULL,"
                             + HijoEntry.SEGURO_MEDICO + " TEXT NOT NULL,"
                             + HijoEntry.ALERGIAS + " TEXT NOT NULL,"
-                            + HijoEntry.AVA_URI + " TEXT,"
                             + "UNIQUE (" + HijoEntry.ID + "))");
 
             db.execSQL("CREATE TABLE IF NOT EXISTS Vacunas (" +
@@ -70,220 +69,225 @@ public class DbHelper extends SQLiteOpenHelper{
     private void cargarHijos(SQLiteDatabase sqLiteDatabase) {
         insertarHijo(sqLiteDatabase, new Hijo("1", "Christian","Cano", "02/01/2016",
                 "Asuncion","M","Paraguaya","San Blas","Central","Asuncion","Clara","Stock","Jose",
-                "084575","Si","Ninguna","hombre.png"));
+                "084575","Si","Ninguna"));
 
         insertarHijo(sqLiteDatabase, new Hijo("2", "Junior","Godoy", "01/01/2016",
                 "Villa Hayes","F","Paraguaya","San Rafael","Presidente Hayes","Villa Hayes","Barrio","Super6","Jose",
-                "0214547","No","Ninguna","mujer.png"));
+                "0214547","No","Ninguna"));
 
         insertarHijo(sqLiteDatabase, new Hijo("3", "Osmar","Romero", "14/02/2016",
                 "Asuncion","M","Paraguaya","San Rafael","Central","Lambare","Santo Domingo","Petrobras","Jose",
-                "09847547","Si","Al polvo","hombre.png"));
+                "0981540562","Si","Al polvo"));
 
         insertarHijo(sqLiteDatabase, new Hijo("4", "Pablo","Barrios", "06/02/2016",
                 "Luque","F","Paraguaya","Santaclara","Central","Luque","Barrio","Stock","Jose",
-                "03214547","Si","al polvo","mujer.png"));
+                "03214547","Si","Al polvo"));
     }
 
     private void cargarVacunas(SQLiteDatabase sqLiteDatabase) {
-        //Vacunas para hijo id 1 - Para campo Aplicada, el cero es SI APLICADA
+        int aplicada = 0;
+        int noAplicada = 1;
+        String nroHijo;
+        //Vacunas para hijo id 1
+        nroHijo = "1";
         insertarVacuna(sqLiteDatabase, new Vacuna(1, "BCG",1 , 0, "08/03/2016",
-                "BXAS22", "Messi", "unica dosis","1", "Marzo", 1));
+                "BXAS22", "Messi", "unica dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(2, "ROTAVIRUS",1 , 0, "08/05/2016",
-                "BXAS22", "Messi", "primera dosis","1", "Mayo", 1));
+                "BXAS22", "Messi", "primera dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(3, "IPV",1 , 0, "08/05/2016",
-                "BXAS22","Messi", "primera dosis", "1","Mayo", 1));
+                "BXAS22","Messi", "primera dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(4, "PCV 10 VALENTE",1 , 0, "08/05/2016",
-                "BXAS22", "Messi", "primera dosis", "1","Mayo", 1));
+                "BXAS22", "Messi", "primera dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(5, "PENTAVALENTE",1 , 0, "08/05/2016",
-                "BXAS22","Messi", "primera dosis", "1","Mayo", 1));
+                "BXAS22","Messi", "primera dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(6, "OPV/IPV",2 , 0, "08/07/2016",
-                "BXAS22", "Messi", "segunda dosis", "1","Julio", 1));
+                "BXAS22", "Messi", "segunda dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(7, "ROTAVIRUS",2 , 0, "08/07/2016",
-                "BXAS22", "Messi", "segunda dosis", "1","Julio", 1));
+                "BXAS22", "Messi", "segunda dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(8, "PCV 10 VALENTE",2 , 0, "08/07/2016",
-                "BXAS22", "Josefina", "segunda dosis", "1","Julio", 1));
+                "BXAS22", "Josefina", "segunda dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(9, "PENTAVALENTE",2 , 0, "08/07/2016",
-                "BXAS22", "Josefina", "segunda dosis", "1","Julio", 1));
+                "BXAS22", "Josefina", "segunda dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(10, "OPV/IPV",3 , 0, "08/09/2016",
-                "BXAS22", "Josefina", "tercera dosis","1", "Setiembre", 1));
+                "BXAS22", "Josefina", "tercera dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(11, "PENTAVALENTE",3 , 0, "08/09/2016",
-                "BXAS22", "Josefina", "tercera dosis", "1","Setiembre",1));
+                "BXAS22", "Josefina", "tercera dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(12, "INFLUENZA 1RA",1 , 0, "08/09/2016",
-                "BXAS22", "Josefina", "tercera dosis", "1","Setiembre",1));
+                "BXAS22", "Josefina", "tercera dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(13, "INFLUENZA 1RA",2 , 0, "08/09/2016",
-                "BXAS22", "Josefina", "tercera dosis","1","Setiembre",1));
+                "BXAS22", "Josefina", "tercera dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(14, "S.P.R",1 , 1, "08/03/2017",
-                "BXAS22", "Jose Fernanzdes", "al 1 año","1","Marzo",1));
+                "BXAS22", "Jose Fernanzdes", "al 1 año",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(15, "PCV 10 REF",2 , 1, "08/03/2017",
-                "BXAS22", "Josefina", "al 1 año", "1","Marzo",1));
+                "BXAS22", "Josefina", "al 1 año", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(16, "AA",1 , 1, "08/03/2017",
-                "BXAS22", "Josefina", "al 1 año", "1","Marzo",1));
+                "BXAS22", "Josefina", "al 1 año", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(17, "INFLUENZA",3 , 1, "08/03/2017",
-                "BXAS22", "Josefina", "al 1 año", "1","Marzo",1));
+                "BXAS22", "Josefina", "al 1 año", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(18," V.V.Z",1 , 1, "08/06/2017",
-                null, "Jose Fernanzdes", "al año y 3 meses", "1","Marzo",0));
+                null, "Jose Fernanzdes", "al año y 3 meses", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(19, "V.H.A",1 ,1, "08/06/2017",
-                null, "Jose Fernanzdes", "al año y 3 meses", "1","Junio",0));
+                null, "Jose Fernanzdes", "al año y 3 meses", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(20, "OPV/IPV",5 , 0, "08/09/2017",
-                null, "Jose Fernanzdes", "1er refuezo", "1","Setiembre",0));
+                null, "Jose Fernanzdes", "1er refuezo", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(21, "D.T.P",1 , 0, "08/09/2017",
-                null, "Jose Fernanzdes", "1er refuezo", "1","Setiembre",0));
+                null, "Jose Fernanzdes", "1er refuezo", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(22, "OPV/IPV",6 , 1, "08/03/2020",
-                null, "Jose Fernanzdes", "2do refuerzo", "1","Marzo",0));
+                null, "Jose Fernanzdes", "2do refuerzo", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(23, "D.T.P",2 , 1, "08/03/2020",
-                null, "Jose Fernanzdes", "2do refuerzo", "1","Marzo", 0));
+                null, "Jose Fernanzdes", "2do refuerzo", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(24, "S.P.R",2 , 4, "08/03/2020",
-                null, "Jose Fernanzdes", "2do refuerzo", "1","Marzo", 0));
-        //Vacunas para hijo id 2 - Para campo Aplicada, el cero es SI APLICADA
-        /*
+                null, "Jose Fernanzdes", "2do refuerzo", nroHijo,noAplicada));
+        //Vacunas para hijo id 2
+        nroHijo = "2";
         insertarVacuna(sqLiteDatabase, new Vacuna(1, "BCG",1 , 0, "08/03/2016",
-                "BXAS22", "Messi", "unica dosis","2",1));
+                "BXAS22", "Messi", "unica dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(2, "ROTAVIRUS",1 , 0, "08/05/2016",
-                "BXAS22", "Messi", "primera dosis","2",1));
+                "BXAS22", "Messi", "primera dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(3, "IPV",1 , 0, "08/05/2016",
-                "BXAS22","Messi", "primera dosis", "2",1));
+                "BXAS22","Messi", "primera dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(4, "PCV 10 VALENTE",1 , 0, "08/05/2016",
-                "BXAS22", "Messi", "primera dosis", "2",1));
+                "BXAS22", "Messi", "primera dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(5, "PENTAVALENTE",1 , 0, "08/05/2016",
-                "BXAS22","Messi", "primera dosis", "2",1));
+                "BXAS22","Messi", "primera dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(6, "OPV/IPV",2 , 0, "08/07/2016",
-                "BXAS22", "Messi", "segunda dosis", "2",1));
+                "BXAS22", "Messi", "segunda dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(7, "ROTAVIRUS",2 , 0, "08/07/2016",
-                "BXAS22", "Messi", "segunda dosis", "2",0));
+                "BXAS22", "Messi", "segunda dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(8, "PCV 10 VALENTE",2 , 0, "08/07/2016",
-                "BXAS22", "Josefina", "segunda dosis", "2",0));
+                "BXAS22", "Josefina", "segunda dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(9, "PENTAVALENTE",2 , 0, "08/07/2016",
-                "BXAS22", "Josefina", "segunda dosis", "2",0));
+                "BXAS22", "Josefina", "segunda dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(10, "OPV/IPV",3 , 0, "08/09/2016",
-                "BXAS22", "Josefina", "tercera dosis","2",0));
+                "BXAS22", "Josefina", "tercera dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(11, "PENTAVALENTE",3 , 0, "08/09/2016",
-                "BXAS22", "Josefina", "tercera dosis", "2",0));
+                "BXAS22", "Josefina", "tercera dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(12, "INFLUENZA 1RA",1 , 0, "08/09/2016",
-                "BXAS22", "Josefina", "tercera dosis", "2",0));
+                "BXAS22", "Josefina", "tercera dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(13, "INFLUENZA 1RA",2 , 0, "08/09/2016",
-                "BXAS22", "Josefina", "tercera dosis","2",0));
+                "BXAS22", "Josefina", "tercera dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(14, "S.P.R",1 , 1, "08/03/2017",
-                "BXAS22", "Jose Fernanzdes", "al 1 año","2",0));
+                "BXAS22", "Jose Fernanzdes", "al 1 año",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(15, "PCV 10 REF",2 , 1, "08/03/2017",
-                "BXAS22", "Josefina", "al 1 año", "2",0));
+                "BXAS22", "Josefina", "al 1 año", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(16, "AA",1 , 1, "08/03/2017",
-                "BXAS22", "Josefina", "al 1 año", "2",0));
+                "BXAS22", "Josefina", "al 1 año", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(17, "INFLUENZA",3 , 1, "08/03/2017",
-                "BXAS22", "Josefina", "al 1 año", "2",0));
-        insertarVacuna(sqLiteDatabase, new Vacuna(18,"V.V.Z",1 , 1, "08/06/2017",
-                null, "Jose Fernanzdes", "al año y 3 meses", "2",1));
+                "BXAS22", "Josefina", "al 1 año", nroHijo,aplicada));
+        insertarVacuna(sqLiteDatabase, new Vacuna(18," V.V.Z",1 , 1, "08/06/2017",
+                null, "Jose Fernanzdes", "al año y 3 meses", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(19, "V.H.A",1 ,1, "08/06/2017",
-                null, "Jose Fernanzdes", "al año y 3 meses", "2",1));
+                null, "Jose Fernanzdes", "al año y 3 meses", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(20, "OPV/IPV",5 , 0, "08/09/2017",
-                null, "Jose Fernanzdes", "1er refuezo", "2",1));
+                null, "Jose Fernanzdes", "1er refuezo", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(21, "D.T.P",1 , 0, "08/09/2017",
-                null, "Jose Fernanzdes", "1er refuezo", "2",1));
+                null, "Jose Fernanzdes", "1er refuezo", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(22, "OPV/IPV",6 , 1, "08/03/2020",
-                null, "Jose Fernanzdes", "2do refuerzo", "2",1));
+                null, "Jose Fernanzdes", "2do refuerzo", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(23, "D.T.P",2 , 1, "08/03/2020",
-                null, "Jose Fernanzdes", "2do refuerzo", "2",1));
+                null, "Jose Fernanzdes", "2do refuerzo", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(24, "S.P.R",2 , 4, "08/03/2020",
-                null, "Jose Fernanzdes", "2do refuerzo", "2",1));
-        //Vacunas para hijo id 3 - Para campo Aplicada, el cero es SI APLICADA
+                null, "Jose Fernanzdes", "2do refuerzo", nroHijo,noAplicada));
+        //Vacunas para hijo id 3
+        nroHijo = "3";
         insertarVacuna(sqLiteDatabase, new Vacuna(1, "BCG",1 , 0, "08/03/2016",
-                "BXAS22", "Messi", "unica dosis","3",0));
+                "BXAS22", "Messi", "unica dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(2, "ROTAVIRUS",1 , 0, "08/05/2016",
-                "BXAS22", "Messi", "primera dosis","3",0));
+                "BXAS22", "Messi", "primera dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(3, "IPV",1 , 0, "08/05/2016",
-                "BXAS22","Messi", "primera dosis", "3",0));
+                "BXAS22","Messi", "primera dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(4, "PCV 10 VALENTE",1 , 0, "08/05/2016",
-                "BXAS22", "Messi", "primera dosis", "3",0));
+                "BXAS22", "Messi", "primera dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(5, "PENTAVALENTE",1 , 0, "08/05/2016",
-                "BXAS22","Messi", "primera dosis", "3",0));
+                "BXAS22","Messi", "primera dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(6, "OPV/IPV",2 , 0, "08/07/2016",
-                "BXAS22", "Messi", "segunda dosis", "3",0));
+                "BXAS22", "Messi", "segunda dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(7, "ROTAVIRUS",2 , 0, "08/07/2016",
-                "BXAS22", "Messi", "segunda dosis", "3",0));
+                "BXAS22", "Messi", "segunda dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(8, "PCV 10 VALENTE",2 , 0, "08/07/2016",
-                "BXAS22", "Josefina", "segunda dosis", "3",0));
+                "BXAS22", "Josefina", "segunda dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(9, "PENTAVALENTE",2 , 0, "08/07/2016",
-                "BXAS22", "Josefina", "segunda dosis", "3",0));
+                "BXAS22", "Josefina", "segunda dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(10, "OPV/IPV",3 , 0, "08/09/2016",
-                "BXAS22", "Josefina", "tercera dosis","3",1));
+                "BXAS22", "Josefina", "tercera dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(11, "PENTAVALENTE",3 , 0, "08/09/2016",
-                "BXAS22", "Josefina", "tercera dosis", "3",1));
+                "BXAS22", "Josefina", "tercera dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(12, "INFLUENZA 1RA",1 , 0, "08/09/2016",
-                "BXAS22", "Josefina", "tercera dosis", "3",1));
+                "BXAS22", "Josefina", "tercera dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(13, "INFLUENZA 1RA",2 , 0, "08/09/2016",
-                "BXAS22", "Josefina", "tercera dosis","3",1));
+                "BXAS22", "Josefina", "tercera dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(14, "S.P.R",1 , 1, "08/03/2017",
-                "BXAS22", "Jose Fernanzdes", "al 1 año","3",1));
+                "BXAS22", "Jose Fernanzdes", "al 1 año",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(15, "PCV 10 REF",2 , 1, "08/03/2017",
-                "BXAS22", "Josefina", "al 1 año", "3",1));
+                "BXAS22", "Josefina", "al 1 año", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(16, "AA",1 , 1, "08/03/2017",
-                "BXAS22", "Josefina", "al 1 año", "3",1));
+                "BXAS22", "Josefina", "al 1 año", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(17, "INFLUENZA",3 , 1, "08/03/2017",
-                "BXAS22", "Josefina", "al 1 año", "3",1));
-        insertarVacuna(sqLiteDatabase, new Vacuna(18,"V.V.Z",1 , 1, "08/06/2017",
-                null, "Jose Fernanzdes", "al año y 3 meses", "3",1));
+                "BXAS22", "Josefina", "al 1 año", nroHijo,aplicada));
+        insertarVacuna(sqLiteDatabase, new Vacuna(18," V.V.Z",1 , 1, "08/06/2017",
+                null, "Jose Fernanzdes", "al año y 3 meses", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(19, "V.H.A",1 ,1, "08/06/2017",
-                null, "Jose Fernanzdes", "al año y 3 meses", "3",1));
+                null, "Jose Fernanzdes", "al año y 3 meses", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(20, "OPV/IPV",5 , 0, "08/09/2017",
-                null, "Jose Fernanzdes", "1er refuezo", "3",1));
+                null, "Jose Fernanzdes", "1er refuezo", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(21, "D.T.P",1 , 0, "08/09/2017",
-                null, "Jose Fernanzdes", "1er refuezo", "3",1));
+                null, "Jose Fernanzdes", "1er refuezo", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(22, "OPV/IPV",6 , 1, "08/03/2020",
-                null, "Jose Fernanzdes", "2do refuerzo", "3",1));
+                null, "Jose Fernanzdes", "2do refuerzo", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(23, "D.T.P",2 , 1, "08/03/2020",
-                null, "Jose Fernanzdes", "2do refuerzo", "3",1));
+                null, "Jose Fernanzdes", "2do refuerzo", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(24, "S.P.R",2 , 4, "08/03/2020",
-                null, "Jose Fernanzdes", "2do refuerzo", "3",1));
-        //Vacunas para hijo id 4 - Para campo Aplicada, el cero es SI APLICADA
+                null, "Jose Fernanzdes", "2do refuerzo", nroHijo,noAplicada));
+        //Vacunas para hijo id 4
+        nroHijo = "4";
         insertarVacuna(sqLiteDatabase, new Vacuna(1, "BCG",1 , 0, "08/03/2016",
-                "BXAS22", "Messi", "unica dosis","4",1));
+                "BXAS22", "Messi", "unica dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(2, "ROTAVIRUS",1 , 0, "08/05/2016",
-                "BXAS22", "Messi", "primera dosis","4",1));
+                "BXAS22", "Messi", "primera dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(3, "IPV",1 , 0, "08/05/2016",
-                "BXAS22","Messi", "primera dosis", "4",1));
+                "BXAS22","Messi", "primera dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(4, "PCV 10 VALENTE",1 , 0, "08/05/2016",
-                "BXAS22", "Messi", "primera dosis", "4",1));
+                "BXAS22", "Messi", "primera dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(5, "PENTAVALENTE",1 , 0, "08/05/2016",
-                "BXAS22","Messi", "primera dosis", "4",1));
+                "BXAS22","Messi", "primera dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(6, "OPV/IPV",2 , 0, "08/07/2016",
-                "BXAS22", "Messi", "segunda dosis", "4",1));
+                "BXAS22", "Messi", "segunda dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(7, "ROTAVIRUS",2 , 0, "08/07/2016",
-                "BXAS22", "Messi", "segunda dosis", "4",0));
+                "BXAS22", "Messi", "segunda dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(8, "PCV 10 VALENTE",2 , 0, "08/07/2016",
-                "BXAS22", "Josefina", "segunda dosis", "4",0));
+                "BXAS22", "Josefina", "segunda dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(9, "PENTAVALENTE",2 , 0, "08/07/2016",
-                "BXAS22", "Josefina", "segunda dosis", "4",0));
+                "BXAS22", "Josefina", "segunda dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(10, "OPV/IPV",3 , 0, "08/09/2016",
-                "BXAS22", "Josefina", "tercera dosis","4",0));
+                "BXAS22", "Josefina", "tercera dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(11, "PENTAVALENTE",3 , 0, "08/09/2016",
-                "BXAS22", "Josefina", "tercera dosis", "4",0));
+                "BXAS22", "Josefina", "tercera dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(12, "INFLUENZA 1RA",1 , 0, "08/09/2016",
-                "BXAS22", "Josefina", "tercera dosis", "4",0));
+                "BXAS22", "Josefina", "tercera dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(13, "INFLUENZA 1RA",2 , 0, "08/09/2016",
-                "BXAS22", "Josefina", "tercera dosis","4",0));
+                "BXAS22", "Josefina", "tercera dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(14, "S.P.R",1 , 1, "08/03/2017",
-                "BXAS22", "Jose Fernanzdes", "al 1 año","4",0));
+                "BXAS22", "Jose Fernanzdes", "al 1 año",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(15, "PCV 10 REF",2 , 1, "08/03/2017",
-                "BXAS22", "Josefina", "al 1 año", "4",0));
+                "BXAS22", "Josefina", "al 1 año", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(16, "AA",1 , 1, "08/03/2017",
-                "BXAS22", "Josefina", "al 1 año", "4",0));
+                "BXAS22", "Josefina", "al 1 año", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(17, "INFLUENZA",3 , 1, "08/03/2017",
-                "BXAS22", "Josefina", "al 1 año", "4",0));
-        insertarVacuna(sqLiteDatabase, new Vacuna(18,"V.V.Z",1 , 1, "08/06/2017",
-                null, "Jose Fernanzdes", "al año y 3 meses", "4",1));
+                "BXAS22", "Josefina", "al 1 año", nroHijo,aplicada));
+        insertarVacuna(sqLiteDatabase, new Vacuna(18," V.V.Z",1 , 1, "08/06/2017",
+                null, "Jose Fernanzdes", "al año y 3 meses", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(19, "V.H.A",1 ,1, "08/06/2017",
-                null, "Jose Fernanzdes", "al año y 3 meses", "4",1));
+                null, "Jose Fernanzdes", "al año y 3 meses", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(20, "OPV/IPV",5 , 0, "08/09/2017",
-                null, "Jose Fernanzdes", "1er refuezo", "4",1));
+                null, "Jose Fernanzdes", "1er refuezo", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(21, "D.T.P",1 , 0, "08/09/2017",
-                null, "Jose Fernanzdes", "1er refuezo", "4",1));
+                null, "Jose Fernanzdes", "1er refuezo", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(22, "OPV/IPV",6 , 1, "08/03/2020",
-                null, "Jose Fernanzdes", "2do refuerzo", "4",1));
+                null, "Jose Fernanzdes", "2do refuerzo", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(23, "D.T.P",2 , 1, "08/03/2020",
-                null, "Jose Fernanzdes", "2do refuerzo", "4",1));
+                null, "Jose Fernanzdes", "2do refuerzo", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(24, "S.P.R",2 , 4, "08/03/2020",
-                null, "Jose Fernanzdes", "2do refuerzo", "4",1));
-                */
+                null, "Jose Fernanzdes", "2do refuerzo", nroHijo,noAplicada));
     }
 
 
@@ -318,16 +322,14 @@ public class DbHelper extends SQLiteOpenHelper{
                         null);
     }
 
-    public Cursor getHijoById(String hijoId) {
-        Cursor c = getReadableDatabase().query(
-                HijoEntry.TABLE_NAME,
+    public Cursor getHijoById(String lawyerId) {
+        return getReadableDatabase().query(HijoEntry.TABLE_NAME,
                 null,
-                HijoEntry.ID + " = ?",
-                new String[]{hijoId},
+                HijoEntry.ID + " LIKE ?",
+                new String[]{lawyerId},
                 null,
                 null,
                 null);
-        return c;
     }
 
     public ArrayList llenar_lv(int orden, String id_hijo){
@@ -373,23 +375,5 @@ public class DbHelper extends SQLiteOpenHelper{
             }while(registros.moveToNext());
         }
         return lista;
-    }
-
-    public Cursor getVacunasByMes(String vacunaMes, String hijoId) {
-        Cursor c = getReadableDatabase().rawQuery("SELECT * FROM "
-                        + EstructuraVac.VacunaEntry.TABLE_NAME + " WHERE " +
-                        EstructuraVac.VacunaEntry.MES + " = ? AND " +
-                        EstructuraVac.VacunaEntry.ID_HIJO + " = ?"
-                , new String[]{vacunaMes, hijoId});
-        return c;
-    }
-
-    public Cursor getNoAplicadas(String hijoId) {
-        Cursor c = getReadableDatabase().rawQuery("SELECT * FROM "
-                        + EstructuraVac.VacunaEntry.TABLE_NAME + " WHERE " +
-                        EstructuraVac.VacunaEntry.APLICADA + " = 0 AND " +
-                        EstructuraVac.VacunaEntry.ID_HIJO + " = ?"
-                , new String[]{"0", hijoId});
-        return c;
     }
 }

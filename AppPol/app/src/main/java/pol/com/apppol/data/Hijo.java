@@ -26,12 +26,11 @@ public class Hijo {
     private String telefono_contacto;
     private String seguro_medico;
     private String alergias;
-    private String ava_uri;
 
     public Hijo(String id, String nombre, String apellido, String fecha_nacimiento, String lugar_nacimiento,
                 String sexo, String nacionalidad, String direccion, String departamento, String municipio,
                 String barrio, String referencia_domicilio, String responsable, String telefono_contacto,
-                String seguro_medico, String alergias, String ava_uri) {
+                String seguro_medico, String alergias) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -48,7 +47,6 @@ public class Hijo {
         this.telefono_contacto = telefono_contacto;
         this.seguro_medico = seguro_medico;
         this.alergias = alergias;
-        this.ava_uri = ava_uri;
     }
 
 
@@ -70,7 +68,6 @@ public class Hijo {
         telefono_contacto = cursor.getString(cursor.getColumnIndex(HijoEntry.TELEFONO_CONTACTO));
         seguro_medico = cursor.getString(cursor.getColumnIndex(HijoEntry.SEGURO_MEDICO));
         alergias = cursor.getString(cursor.getColumnIndex(HijoEntry.ALERGIAS));
-        ava_uri =cursor.getString(cursor.getColumnIndex(HijoEntry.AVA_URI));
 
 
     }
@@ -95,9 +92,6 @@ public class Hijo {
         values.put(HijoEntry.TELEFONO_CONTACTO, telefono_contacto);
         values.put(HijoEntry.SEGURO_MEDICO, seguro_medico);
         values.put(HijoEntry.ALERGIAS, alergias);
-
-        values.put(HijoEntry.AVA_URI, ava_uri);
-
 
         return values;
     }
@@ -165,9 +159,5 @@ public class Hijo {
 
     public String getAlergias() {
         return alergias;
-    }
-
-    public String getAva_uri() {
-        return ava_uri;
     }
 }

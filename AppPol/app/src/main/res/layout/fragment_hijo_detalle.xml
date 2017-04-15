@@ -51,6 +51,21 @@ android:orientation="vertical">
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="Nacionalidad"
+        android:textColor="?colorPrimary" />
+
+    <TextView
+        android:id="@+id/tv_nacionalidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="Gentilicio" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:text="Lugar Nacimiento"
         android:textColor="?colorPrimary" />
 
@@ -60,6 +75,21 @@ android:orientation="vertical">
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         tools:text="Donde nacio" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="Sexo"
+        android:textColor="?colorPrimary" />
+
+    <TextView
+        android:id="@+id/tv_sex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="M" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -77,18 +107,41 @@ android:orientation="vertical">
         tools:text="Donde vive" />
 
     <TextView
-        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:text="Sexo"
+        android:text="Contacto telefonico"
         android:textColor="?colorPrimary" />
 
     <TextView
-        android:id="@+id/tv_sex"
+        android:id="@+id/tv_telefono"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        tools:text="M" />
+        tools:text="telefono al cual llaman" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="Alergias"
+        android:textColor="?colorPrimary" />
+
+    <TextView
+        android:id="@+id/tv_alergias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="tiene o no tiene" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text=" "
+        android:textColor="?colorPrimary" />
+
 </LinearLayout>

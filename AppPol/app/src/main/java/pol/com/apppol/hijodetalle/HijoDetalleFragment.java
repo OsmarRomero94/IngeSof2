@@ -3,7 +3,6 @@ package pol.com.apppol.hijodetalle;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -13,8 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
 
 import pol.com.apppol.R;
 import pol.com.apppol.data.Hijo;
@@ -29,16 +26,18 @@ import pol.com.apppol.hijo.HijoFragment;
 
 public class HijoDetalleFragment extends Fragment {
     private static final String ARG_LAWYER_ID = "lawyerId";
-    private TextView mLawyerId;
-    private String  mId;
-    private CollapsingToolbarLayout mCollapsingView;
-    //private ImageView mAvatar;
-    private TextView mFechaNac;
-    private TextView mLugarNac;
-    private TextView mDomic;
-    private TextView mSex;
     private DbHelper mLawyersDbHelper;
-
+    private String  mId;
+    //Variables a mostrar
+    private CollapsingToolbarLayout mCollapsingView;
+    private TextView mLawyerId;
+    private TextView mFechaNac;
+    private TextView mNacionalidad;
+    private TextView mLugarNac;
+    private TextView mSex;
+    private TextView mDomic;
+    private TextView mTelefono;
+    private TextView mAlergias;
 
     public HijoDetalleFragment() {
         // Required empty public constructor
@@ -65,14 +64,19 @@ public class HijoDetalleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_hijo_detalle, container, false);
+        //Variables a mostrar
         mCollapsingView = (CollapsingToolbarLayout) getActivity().findViewById(R.id.toolbar_layout);
-        //mAvatar = (ImageView) getActivity().findViewById(R.id.iv_avatar);
         mLawyerId = (TextView) root.findViewById(R.id.tv_id);
         mFechaNac = (TextView) root.findViewById(R.id.tv_fecha_nac);
+        mNacionalidad = (TextView) root.findViewById(R.id.tv_nacionalidad);
         mLugarNac = (TextView) root.findViewById(R.id.tv_lugar_nac);
-        mDomic= (TextView) root.findViewById(R.id.tv_domic);
         mSex = (TextView) root.findViewById(R.id.tv_sex);
+        mDomic= (TextView) root.findViewById(R.id.tv_domic);
+        mTelefono = (TextView) root.findViewById(R.id.tv_telefono);
+        mAlergias = (TextView) root.findViewById(R.id.tv_alergias);
+        //Instancia del DbHelper
         mLawyersDbHelper = new DbHelper(getActivity(), "Hijo.db", null, 1);
+        //Cargar el hijo solicitado
         loadHijo();
         return root;
     }
@@ -92,16 +96,16 @@ public class HijoDetalleFragment extends Fragment {
     }
 
     private void showHijo(Hijo hijo) {
+        //Agarrar las variables a mostrar
         mCollapsingView.setTitle(hijo.getNombre() + " " + hijo.getApellido());
-        Glide.with(this)
-                .load(Uri.parse(hijo.getAva_uri()))
-                .centerCrop();
-                //.into(mAvatar);
         mLawyerId.setText(hijo.getId());
         mFechaNac.setText(hijo.getFecha_nacimiento());
+        mNacionalidad.setText(hijo.getNacionalidad());
         mLugarNac.setText(hijo.getLugar_nacimiento());
-        mDomic.setText(hijo.getDireccion());
         mSex.setText(hijo.getSexo());
+        mDomic.setText(hijo.getDireccion());
+        mTelefono.setText(hijo.getTelefono_contacto());
+        mAlergias.setText(hijo.getAlergias());
     }
 
     private void showLoadError() {
