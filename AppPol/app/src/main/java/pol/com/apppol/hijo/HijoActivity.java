@@ -44,7 +44,7 @@ public class HijoActivity extends AppCompatActivity {
         if (!cargada){
             //Calculo de vacuna proxima //Aca falta un metodo que agarre las fechas de la bd
             String[] fechasVacunas = {
-                    "15/04/2017",//Poner fecha actual para probar notificacion
+                    "20/04/2017",//Poner fecha actual para probar notificacion
                     //Abajo van 2 dias antes de las fechas de vacunacion cargada en la base de datos
                     "06/03/2016",
                     "06/05/2016",
