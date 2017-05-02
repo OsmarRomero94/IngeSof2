@@ -5,7 +5,8 @@ Christian Cano -
 Pablo Barrios -
 Junior Godoy
 
-Proyecto Aplicacion
+Proyecto Aplicacion Vacunas
+mas
 Proyecto RestService con backup de la base de datos
 
 Hecho en Android Studio 2.3
