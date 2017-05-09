@@ -2,12 +2,14 @@ package pol.com.apppol;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -19,6 +21,19 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
 
 import pol.com.apppol.hijo.HijoActivity;
 
@@ -37,6 +52,9 @@ public class SignInActivity extends AppCompatActivity implements
     private TextView mStatusTextView;
     private TextView mCorreoTextView;
     private ProgressDialog mProgressDialog;
+    String correoUsuario;
+    String ip = "192.168.1.102";
+    String url = "http://"+ip+":8084/RestService/webresources/usuario/isuser?correo=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +136,7 @@ public class SignInActivity extends AppCompatActivity implements
             assert acct != null;
             mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
             mCorreoTextView.setText(getString(R.string.email, acct.getEmail()));
+            correoUsuario = String.valueOf(acct.getEmail());
             updateUI(true);
         } else {
             // Signed out, show unauthenticated UI.
@@ -136,8 +155,12 @@ public class SignInActivity extends AppCompatActivity implements
     // [START signOut]
     private void signOut() {
         //Boton Siguiente, va a la actividad HijoActivity
+        JSONAsyncTask tarea = new JSONAsyncTask();
+        tarea.execute();
+        /*
         Intent intent = new Intent(this, HijoActivity.class);
         startActivity(intent);
+        */
     }
     // [END signOut]
 
@@ -183,7 +206,7 @@ public class SignInActivity extends AppCompatActivity implements
             findViewById(R.id.correo).setVisibility(View.VISIBLE);
         } else {
             mStatusTextView.setText(R.string.signed_out);
-            mCorreoTextView.setText(R.string.email);
+            mCorreoTextView.setText(R.string.espacio);
             findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
             findViewById(R.id.correo).setVisibility(View.GONE);
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
@@ -202,6 +225,48 @@ public class SignInActivity extends AppCompatActivity implements
             case R.id.disconnect_button:
                 revokeAccess();
                 break;
+        }
+    }
+
+    private class JSONAsyncTask extends AsyncTask<String, Void, Boolean> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... urls) {
+            try {
+                //
+                HttpGet httppost = new HttpGet(url + correoUsuario);
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpResponse response = httpclient.execute(httppost);
+
+                // StatusLine stat = response.getStatusLine();
+                int status = response.getStatusLine().getStatusCode();
+
+                if (status == 200) {
+                    HttpEntity entity = response.getEntity();
+                    String data = EntityUtils.toString(entity);
+
+                    new JSONObject(data);
+                    return true;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+
+        protected void onPostExecute(Boolean result) {
+            if(result){
+                Intent intent = new Intent(SignInActivity.this, HijoActivity.class);
+                startActivity(intent);
+            }else{
+                Toast.makeText(getApplicationContext(),"Su correo no esta registrado",Toast.LENGTH_LONG).show();
+            }
         }
     }
 }

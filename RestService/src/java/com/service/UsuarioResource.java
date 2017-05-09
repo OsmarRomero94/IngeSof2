@@ -74,4 +74,13 @@ public class UsuarioResource {
         user = uservice.getUserById(id);
         return user;
     }
+    //==========================================================================
+    @GET
+    @Path("/isuser")
+    @Produces("text/plain")
+    public String isUser(@QueryParam("correo") String correo) throws ClassNotFoundException, SQLException {
+        String result;
+        result = uservice.isUser(correo);
+        return result;
+    }
 }

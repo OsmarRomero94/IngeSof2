@@ -3,6 +3,7 @@
     <string name="title_activity_hijo">Hijos</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_hijo_detalle">HijoDetalleActivity</string>
+    <string name="espacio"> </string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

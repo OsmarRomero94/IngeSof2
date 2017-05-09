@@ -1,6 +1,7 @@
 Links de pruebas:
-http://localhost:8080/RestService/webresources/usuario/adduser 			#POST 	- Añade un nuevo usuario  
+http://localhost:8080/RestService/webresources/usuario/adduser 		#POST 	- Añade un nuevo usuario  
 http://localhost:8080/RestService/webresources/usuario/deleteuser?id=13 #DELETE - Elimina un usuario
-http://localhost:8080/RestService/webresources/usuario/edituser			#PUT 	- Edita un usuario
-http://localhost:8080/RestService/webresources/usuario/getusers			#GET	- Lista los usuarios
+http://localhost:8080/RestService/webresources/usuario/edituser		#PUT 	- Edita un usuario
+http://localhost:8080/RestService/webresources/usuario/getusers		#GET	- Lista los usuarios
 http://localhost:8080/RestService/webresources/usuario/getuserbyid?id=1	#GET	- Retorna un usuario según id
+

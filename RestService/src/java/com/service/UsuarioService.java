@@ -92,5 +92,18 @@ public class UsuarioService {
         conex.close();
         con.cerrarBD();
         return user;
-    }   
+    }
+    //==========================================================================
+    
+    public String isUser(String correo) throws ClassNotFoundException, SQLException {
+        conex = con.conectarBD();
+        Statement st = conex.createStatement();
+        ResultSet rs = st.executeQuery("select id from \"Usuarios\" where correo = '"+correo+"'");
+        if (rs.next()) {
+            return "true";
+        }
+        else {
+            return "false";
+        }      
+    }
 }
