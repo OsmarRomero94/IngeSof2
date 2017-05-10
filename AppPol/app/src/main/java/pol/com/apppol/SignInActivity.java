@@ -3,8 +3,10 @@ package pol.com.apppol;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -22,18 +24,17 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Objects;
 
 import pol.com.apppol.hijo.HijoActivity;
 
@@ -53,8 +54,6 @@ public class SignInActivity extends AppCompatActivity implements
     private TextView mCorreoTextView;
     private ProgressDialog mProgressDialog;
     String correoUsuario;
-    String ip = "192.168.1.102";
-    String url = "http://"+ip+":8084/RestService/webresources/usuario/isuser?correo=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,12 +154,8 @@ public class SignInActivity extends AppCompatActivity implements
     // [START signOut]
     private void signOut() {
         //Boton Siguiente, va a la actividad HijoActivity
-        JSONAsyncTask tarea = new JSONAsyncTask();
+        TareaWSObtenerID tarea = new TareaWSObtenerID();
         tarea.execute();
-        /*
-        Intent intent = new Intent(this, HijoActivity.class);
-        startActivity(intent);
-        */
     }
     // [END signOut]
 
@@ -206,7 +201,7 @@ public class SignInActivity extends AppCompatActivity implements
             findViewById(R.id.correo).setVisibility(View.VISIBLE);
         } else {
             mStatusTextView.setText(R.string.signed_out);
-            mCorreoTextView.setText(R.string.espacio);
+            mCorreoTextView.setText(R.string.email);
             findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
             findViewById(R.id.correo).setVisibility(View.GONE);
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
@@ -228,44 +223,61 @@ public class SignInActivity extends AppCompatActivity implements
         }
     }
 
-    private class JSONAsyncTask extends AsyncTask<String, Void, Boolean> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
+    private class TareaWSObtenerID extends AsyncTask<String,Integer,Boolean> {
+        public static final String ip="10.13.15.92";
+        public static final String UriUsuarios ="http://"+ip+":8084/RestService/webresources/usuario/isuser?correo=";
+        private String id_usuario;
+        private boolean resu=true;
+        protected Boolean doInBackground(String... params) {
 
-        @Override
-        protected Boolean doInBackground(String... urls) {
+            boolean resul = true;
+
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpGet del = new HttpGet(UriUsuarios + correoUsuario);
+            del.setHeader("content-type", "text/plain");
+
             try {
-                //
-                HttpGet httppost = new HttpGet(url + correoUsuario);
-                HttpClient httpclient = new DefaultHttpClient();
-                HttpResponse response = httpclient.execute(httppost);
+                HttpResponse resp = httpClient.execute(del);
+                String respStr = EntityUtils.toString(resp.getEntity());
+                System.out.println(respStr);
 
-                // StatusLine stat = response.getStatusLine();
-                int status = response.getStatusLine().getStatusCode();
+                HttpResponse response = httpClient.execute(del);
+                if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                    InputStream instream = response.getEntity().getContent();
+                    BufferedReader r = new BufferedReader(new InputStreamReader(
+                            instream), 8000);
+                    StringBuilder total = new StringBuilder();
+                    String line;
+                    while ((line = r.readLine()) != null) {
+                        total.append(line);
+                    }
+                    instream.close();
+                    String bufstring = total.toString();
+                    System.out.println(bufstring);
 
-                if (status == 200) {
-                    HttpEntity entity = response.getEntity();
-                    String data = EntityUtils.toString(entity);
 
-                    new JSONObject(data);
-                    return true;
+                    if (bufstring.equals("false")) {
+                        resul= false;
+                    }
+                    id_usuario = bufstring;
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
+            } catch (Exception ex) {
+                Log.e("ServicioRest", "Error!", ex);
+                resul = false;
             }
-            return false;
+            //
+            return resul;
         }
 
         protected void onPostExecute(Boolean result) {
-            if(result){
+            if (result) {
                 Intent intent = new Intent(SignInActivity.this, HijoActivity.class);
+                //intent.putExtra("id_usuario", id_usuario);
                 startActivity(intent);
             }else{
-                Toast.makeText(getApplicationContext(),"Su correo no esta registrado",Toast.LENGTH_LONG).show();
+                Toast toast1 = Toast.makeText(getApplicationContext(),
+                                "no esta registrado", Toast.LENGTH_SHORT);
+                toast1.show();
             }
         }
     }
