@@ -18,8 +18,8 @@ public class Conexion {
     public Conexion () {
         con = null;
         user = "postgres";
-        pass = "WALTONDESARROLLO";
-        servidor = "localhost:5433";
+        pass = "admin";
+        servidor = "localhost:5432";
         database = "RestService";
     }
     
