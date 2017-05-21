@@ -4,8 +4,19 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import pol.com.apppol.hijo.HijoFragment;
 
 import static pol.com.apppol.data.EstructuraHijo.HijoEntry;
 
@@ -13,11 +24,18 @@ import static pol.com.apppol.data.EstructuraHijo.HijoEntry;
  * Manejador de la base de datos
  */
 
-public class DbHelper extends SQLiteOpenHelper{
+public class DbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Hijo.db";
+    //Se debe cambiar puerto y direccion ip de la red para ejecutar el proyecto
+    String servidor="http://192.168.1.54:8084";
+    String linkService = servidor+"/RestService/webresources/usuario/gethijos?userId=";
+    String linkServiceVacuna = servidor+"/RestService/webresources/usuario/getregistro?userId=";
+    int id_usuario;
 
     public DbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
+
+
     }
 
     @Override
@@ -34,64 +52,79 @@ public class DbHelper extends SQLiteOpenHelper{
                             + HijoEntry.SEXO + " TEXT NOT NULL,"
                             + HijoEntry.NACIONALIDAD + " TEXT NOT NULL,"
                             + HijoEntry.DIRECCION + " TEXT NOT NULL,"
-                            + HijoEntry.DEPARTAMENTO + " TEXT NOT NULL,"
-                            + HijoEntry.MUNICIPIO + " TEXT NOT NULL,"
-                            + HijoEntry.BARRIO + " TEXT NOT NULL,"
-                            + HijoEntry.REFERENCIA_DOMICILIO + " TEXT NOT NULL,"
-                            + HijoEntry.RESPONSABLE + " TEXT NOT NULL,"
                             + HijoEntry.TELEFONO_CONTACTO + " TEXT NOT NULL,"
-                            + HijoEntry.SEGURO_MEDICO + " TEXT NOT NULL,"
                             + HijoEntry.ALERGIAS + " TEXT NOT NULL,"
                             + "UNIQUE (" + HijoEntry.ID + "))");
-
             db.execSQL("CREATE TABLE IF NOT EXISTS Vacunas (" +
-                            "id_vacuna integer not null, " +
-                            "nombre text not null, " +
-                            "dosis intenger," +
-                            "edad integer," +
-                            "fecha text," +
-                            "lote text," +
-                            "nombre_medico text," +
-                            "descripcion text," +
-                            "id_hijo TEXT not null," +
-                            "aplicada INTEGER," +
-                            "PRIMARY KEY (id_vacuna, id_hijo)," +
-                            "FOREIGN KEY(id_hijo) REFERENCES hijo(id_hijo));");
-
+                    "id_vacuna integer not null, " +
+                    "nombre text not null, " +
+                    "dosis intenger," +
+                    "edad integer," +
+                    "fecha text," +
+                    "lote text," +
+                    "nombre_medico text," +
+                    "descripcion text," +
+                    "id_hijo TEXT not null," +
+                    "aplicada INTEGER," +
+                    "PRIMARY KEY (id_vacuna, id_hijo)," +
+                    "FOREIGN KEY(id_hijo) REFERENCES hijo(id_hijo));");
             cargarHijos(db);
             cargarVacunas(db);
-
         }catch (Exception e){
             System.out.println("Error al cargar tablas");
         }
     }
 
-    private void cargarHijos(SQLiteDatabase sqLiteDatabase) {
-        insertarHijo(sqLiteDatabase, new Hijo("1", "Christian","Cano", "02/01/2016",
-                "Asuncion","M","Paraguaya","San Blas","Central","Asuncion","Clara","Stock","Jose",
-                "084575","Si","Ninguna"));
-
-        insertarHijo(sqLiteDatabase, new Hijo("2", "Junior","Godoy", "01/01/2016",
-                "Villa Hayes","F","Paraguaya","San Rafael","Presidente Hayes","Villa Hayes","Barrio","Super6","Jose",
-                "0214547","No","Ninguna"));
-
-        insertarHijo(sqLiteDatabase, new Hijo("3", "Osmar","Romero", "14/02/2016",
-                "Asuncion","M","Paraguaya","San Rafael","Central","Lambare","Santo Domingo","Petrobras","Jose",
-                "0981540562","Si","Al polvo"));
-
-        insertarHijo(sqLiteDatabase, new Hijo("4", "Pablo","Barrios", "06/02/2016",
-                "Luque","F","Paraguaya","Santaclara","Central","Luque","Barrio","Stock","Jose",
-                "03214547","Si","Al polvo"));
-    }
-
+    private void cargarHijos(final SQLiteDatabase sqLiteDatabase) {
+        String id = HijoFragment.getUsuario();
+        id_usuario = Integer.parseInt(id);
+        HttpClient httpClient = new DefaultHttpClient();
+                HttpGet del =
+                        new HttpGet(linkService + id_usuario);
+                del.setHeader("content-type", "application/json");
+                try {
+                    HttpResponse resp = httpClient.execute(del);
+                    String respStr = EntityUtils.toString(resp.getEntity());
+                    JSONArray respJSON = new JSONArray(respStr);
+                    //clientes = new String[respJSON.length()];
+                    for (int i = 0; i < respJSON.length(); i++) {
+                        JSONObject obj = respJSON.getJSONObject(i);
+                        insertarHijo(sqLiteDatabase, new Hijo((obj.getString("id_hijo")),obj.getString("nombre"),obj.getString("apellido"), obj.getString("fecha_nacimiento"),
+                                obj.getString("lugar_nacimiento"),obj.getString("sexo"),obj.getString("nacionalidad"),obj.getString("direccion"),obj.getString("telefono_contacto"),
+                                obj.getString("alergia")));
+                    }
+                } catch (Exception ex) {
+                    Log.e("ServicioRest", "Error!", ex);
+                }
+            }
+    /*esta parte se debe probar si ejecuta y carga las vacunas en el sql lite
+    * no esta guardando del json a las vacunas al sql lite*/
     private void cargarVacunas(SQLiteDatabase sqLiteDatabase) {
+/*
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet del = new HttpGet(linkServiceVacuna + id_usuario);
+        del.setHeader("content-type", "application/json");
+        try {
+            HttpResponse resp = httpClient.execute(del);
+            String respStr = EntityUtils.toString(resp.getEntity());
+            JSONArray respJSON = new JSONArray(respStr);
+            //clientes = new String[respJSON.length()];
+            for (int i = 0; i < respJSON.length(); i++) {
+                JSONObject obj = respJSON.getJSONObject(i);
+                insertarVacuna(sqLiteDatabase, new Vacuna((obj.getInt("id_vacuna")),obj.getString("nombre"),obj.getInt("dosis"), 1, obj.getString("fecha"),
+                        "BXAS22", obj.getString("responsable"),"descruocuib",obj.getString("id_hijo"),obj.getInt("estado")));
+            }
+        } catch (Exception ex) {
+            Log.e("ServicioRest", "Error!", ex);
+        }
+*/
         int aplicada = 0;
         int noAplicada = 1;
         String nroHijo;
         //Vacunas para hijo id 1
         nroHijo = "1";
-        insertarVacuna(sqLiteDatabase, new Vacuna(1, "BCG",1 , 0, "08/03/2016",
-                "BXAS22", "Messi", "unica dosis",nroHijo,aplicada));
+        insertarVacuna(sqLiteDatabase, new Vacuna(1, "S.P.R",2 , 4, "08/03/2020",
+                null, "Jose Fernanzdes", "2do refuerzo", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(2, "ROTAVIRUS",1 , 0, "08/05/2016",
                 "BXAS22", "Messi", "primera dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(3, "IPV",1 , 0, "08/05/2016",
@@ -136,20 +169,20 @@ public class DbHelper extends SQLiteOpenHelper{
                 null, "Jose Fernanzdes", "2do refuerzo", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(23, "D.T.P",2 , 1, "08/03/2020",
                 null, "Jose Fernanzdes", "2do refuerzo", nroHijo,noAplicada));
-        insertarVacuna(sqLiteDatabase, new Vacuna(24, "S.P.R",2 , 4, "08/03/2020",
-                null, "Jose Fernanzdes", "2do refuerzo", nroHijo,noAplicada));
+        insertarVacuna(sqLiteDatabase, new Vacuna(24, "BCG",1 , 0, "08/03/2016",
+                "BXAS22", "Messi","descruocuib",nroHijo,aplicada));
         //Vacunas para hijo id 2
         nroHijo = "2";
-        insertarVacuna(sqLiteDatabase, new Vacuna(1, "BCG",1 , 0, "08/03/2016",
-                "BXAS22", "Messi", "unica dosis",nroHijo,aplicada));
+        insertarVacuna(sqLiteDatabase, new Vacuna(1, "OPV/IPV",6 , 1, "08/03/2020",
+                null, "Jose Fernanzdes", "2do refuerzo", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(2, "ROTAVIRUS",1 , 0, "08/05/2016",
                 "BXAS22", "Messi", "primera dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(3, "IPV",1 , 0, "08/05/2016",
                 "BXAS22","Messi", "primera dosis", nroHijo,aplicada));
-        insertarVacuna(sqLiteDatabase, new Vacuna(4, "PCV 10 VALENTE",1 , 0, "08/05/2016",
-                "BXAS22", "Messi", "primera dosis", nroHijo,aplicada));
-        insertarVacuna(sqLiteDatabase, new Vacuna(5, "PENTAVALENTE",1 , 0, "08/05/2016",
-                "BXAS22","Messi", "primera dosis", nroHijo,aplicada));
+        insertarVacuna(sqLiteDatabase, new Vacuna(4, "PCV 10 REF",2 , 1, "08/03/2017",
+                "BXAS22", "Josefina", "al 1 año", nroHijo,aplicada));
+        insertarVacuna(sqLiteDatabase, new Vacuna(5, "INFLUENZA",3 , 1, "08/03/2017",
+                "BXAS22", "Josefina", "al 1 año", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(6, "OPV/IPV",2 , 0, "08/07/2016",
                 "BXAS22", "Messi", "segunda dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(7, "ROTAVIRUS",2 , 0, "08/07/2016",
@@ -168,12 +201,12 @@ public class DbHelper extends SQLiteOpenHelper{
                 "BXAS22", "Josefina", "tercera dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(14, "S.P.R",1 , 1, "08/03/2017",
                 "BXAS22", "Jose Fernanzdes", "al 1 año",nroHijo,aplicada));
-        insertarVacuna(sqLiteDatabase, new Vacuna(15, "PCV 10 REF",2 , 1, "08/03/2017",
-                "BXAS22", "Josefina", "al 1 año", nroHijo,aplicada));
+        insertarVacuna(sqLiteDatabase, new Vacuna(15, "PCV 10 VALENTE",1 , 0, "08/05/2016",
+                "BXAS22", "Messi", "primera dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(16, "AA",1 , 1, "08/03/2017",
                 "BXAS22", "Josefina", "al 1 año", nroHijo,aplicada));
-        insertarVacuna(sqLiteDatabase, new Vacuna(17, "INFLUENZA",3 , 1, "08/03/2017",
-                "BXAS22", "Josefina", "al 1 año", nroHijo,aplicada));
+        insertarVacuna(sqLiteDatabase, new Vacuna(17, "PENTAVALENTE",1 , 0, "08/05/2016",
+                "BXAS22","Messi", "primera dosis", nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(18," V.V.Z",1 , 1, "08/06/2017",
                 null, "Jose Fernanzdes", "al año y 3 meses", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(19, "V.H.A",1 ,1, "08/06/2017",
@@ -182,8 +215,8 @@ public class DbHelper extends SQLiteOpenHelper{
                 null, "Jose Fernanzdes", "1er refuezo", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(21, "D.T.P",1 , 0, "08/09/2017",
                 null, "Jose Fernanzdes", "1er refuezo", nroHijo,noAplicada));
-        insertarVacuna(sqLiteDatabase, new Vacuna(22, "OPV/IPV",6 , 1, "08/03/2020",
-                null, "Jose Fernanzdes", "2do refuerzo", nroHijo,noAplicada));
+        insertarVacuna(sqLiteDatabase, new Vacuna(22, "BCG",1 , 0, "08/03/2016",
+                "BXAS22", "Messi", "unica dosis",nroHijo,aplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(23, "D.T.P",2 , 1, "08/03/2020",
                 null, "Jose Fernanzdes", "2do refuerzo", nroHijo,noAplicada));
         insertarVacuna(sqLiteDatabase, new Vacuna(24, "S.P.R",2 , 4, "08/03/2020",
@@ -376,4 +409,6 @@ public class DbHelper extends SQLiteOpenHelper{
         }
         return lista;
     }
+
+
 }

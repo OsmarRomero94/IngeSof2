@@ -83,4 +83,26 @@ public class UsuarioResource {
         result = uservice.isUser(correo);
         return result;
     }
+    //==========================================================================
+    
+    @GET
+    @Path("/gethijos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Hijo> getHijos(@QueryParam("userId") int userId) throws ClassNotFoundException, SQLException {
+        Usuario user = new Usuario();
+        ArrayList<Hijo> hijos = new ArrayList();
+        hijos = uservice.getHijos(userId);
+        return hijos;
+    }
+     //==========================================================================
+    
+    @GET
+    @Path("/getregistro")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Registro> getRegistro(@QueryParam("userId") int hijoId) throws ClassNotFoundException, SQLException {
+        Usuario user = new Usuario();
+        ArrayList<Registro> registros = new ArrayList();
+        registros = uservice.getRegistros(hijoId);
+        return registros;
+    }
 }

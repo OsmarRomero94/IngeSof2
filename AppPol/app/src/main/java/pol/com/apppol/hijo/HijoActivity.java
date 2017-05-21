@@ -24,6 +24,7 @@ public class HijoActivity extends AppCompatActivity {
     public static final int NOTIF_ALERTA_ID = 55;
     public static boolean cargada = false;
     public static boolean notificar = false;
+    protected String id_usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,16 +32,20 @@ public class HijoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hijo);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //recibe parametro de singin
+        id_usuario=getIntent().getExtras().getString("id_usuario");
+        Bundle bundle = new Bundle();
+        bundle.putString("id_usuario", id_usuario);
         HijoFragment fragment = (HijoFragment) getSupportFragmentManager().findFragmentById(R.id.hijo_container);
         //Cargar fragmento si no exite
         if (fragment == null) {
             fragment = HijoFragment.newInstance();
+            fragment.setArguments(bundle);
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.hijo_container, fragment)
                     .commit();
         }
-
         if (!cargada){
             //Calculo de vacuna proxima //Aca falta un metodo que agarre las fechas de la bd
             String[] fechasVacunas = {

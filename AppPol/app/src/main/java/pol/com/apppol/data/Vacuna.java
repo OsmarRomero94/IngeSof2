@@ -146,7 +146,8 @@ public class Vacuna {
                 ", lote='" + lote + '\'' +
                 ", nombre_medico='" + nombre_medico + '\'' +
                 ", descripcion='" + descripcion + '\'' +
-                ", id_hijo=" + id_hijo +
+                ", id_hijo='" +id_hijo + '\'' +
+                ", aplicada=" + aplicada +
                 '}';
     }
 }

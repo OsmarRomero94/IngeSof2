@@ -224,23 +224,16 @@ public class SignInActivity extends AppCompatActivity implements
     }
 
     private class TareaWSObtenerID extends AsyncTask<String,Integer,Boolean> {
-        public static final String ip="10.13.15.92";
-        public static final String UriUsuarios ="http://"+ip+":8084/RestService/webresources/usuario/isuser?correo=";
+        public static final String servidor="http://192.168.1.54:8084";
+        public static final String linkService =servidor+"/RestService/webresources/usuario/isuser?correo=";
         private String id_usuario;
-        private boolean resu=true;
         protected Boolean doInBackground(String... params) {
-
-            boolean resul = true;
-
+            boolean resultado = false;
             HttpClient httpClient = new DefaultHttpClient();
-            HttpGet del = new HttpGet(UriUsuarios + correoUsuario);
+            HttpGet del = new HttpGet(linkService + correoUsuario);
             del.setHeader("content-type", "text/plain");
 
             try {
-                HttpResponse resp = httpClient.execute(del);
-                String respStr = EntityUtils.toString(resp.getEntity());
-                System.out.println(respStr);
-
                 HttpResponse response = httpClient.execute(del);
                 if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
                     InputStream instream = response.getEntity().getContent();
@@ -252,33 +245,29 @@ public class SignInActivity extends AppCompatActivity implements
                         total.append(line);
                     }
                     instream.close();
-                    String bufstring = total.toString();
-                    System.out.println(bufstring);
-
-
-                    if (bufstring.equals("false")) {
-                        resul= false;
+                    id_usuario = total.toString();
+                    if (!id_usuario.equals("0")) {
+                        resultado= true;
                     }
-                    id_usuario = bufstring;
                 }
             } catch (Exception ex) {
                 Log.e("ServicioRest", "Error!", ex);
-                resul = false;
             }
             //
-            return resul;
+            return resultado;
         }
 
-        protected void onPostExecute(Boolean result) {
-            if (result) {
+        protected void onPostExecute(Boolean resultado) {
+            if (resultado) {
                 Intent intent = new Intent(SignInActivity.this, HijoActivity.class);
-                //intent.putExtra("id_usuario", id_usuario);
+                intent.putExtra("id_usuario", id_usuario);
                 startActivity(intent);
             }else{
                 Toast toast1 = Toast.makeText(getApplicationContext(),
-                                "no esta registrado", Toast.LENGTH_SHORT);
+                                "Correo no registrado", Toast.LENGTH_SHORT);
                 toast1.show();
             }
         }
+
     }
 }
