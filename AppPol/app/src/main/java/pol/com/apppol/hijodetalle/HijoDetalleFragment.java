@@ -75,7 +75,7 @@ public class HijoDetalleFragment extends Fragment {
         mTelefono = (TextView) root.findViewById(R.id.tv_telefono);
         mAlergias = (TextView) root.findViewById(R.id.tv_alergias);
         //Instancia del DbHelper
-        mLawyersDbHelper = new DbHelper(getActivity(), "Hijo.db", null, 1);
+        mLawyersDbHelper = new DbHelper(getActivity(), "Hijo.db", null, 1,"");
         //Cargar el hijo solicitado
         loadHijo();
         return root;

@@ -224,7 +224,7 @@ public class SignInActivity extends AppCompatActivity implements
     }
 
     private class TareaWSObtenerID extends AsyncTask<String,Integer,Boolean> {
-        public static final String servidor="http://192.168.1.54:8084";
+        public static final String servidor="http://192.168.43.11:8080";
         public static final String linkService =servidor+"/RestService/webresources/usuario/isuser?correo=";
         private String id_usuario;
         protected Boolean doInBackground(String... params) {
@@ -268,6 +268,5 @@ public class SignInActivity extends AppCompatActivity implements
                 toast1.show();
             }
         }
-
     }
 }

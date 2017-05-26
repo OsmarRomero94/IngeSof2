@@ -23,7 +23,7 @@
 
 
     <!-- signinActivity-->
-
+    <string name="servidor">http://10.13.13.214:8080</string>
     <string name="sign_out">SIGUIENTE</string>
     <string name="revocar">DESCONECTAR</string>
 

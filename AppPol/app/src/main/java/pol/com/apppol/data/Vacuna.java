@@ -19,10 +19,6 @@ public class Vacuna {
     private String id_hijo;
     private int aplicada;
 
-    public Vacuna (){
-        //Empty
-    }
-
     public Vacuna(int id_vacuna, String nombre, int dosis, int edad, String fecha, String lote,
                   String nombre_medico, String descripcion, String id_hijo, int aplicada) {
         this.id_vacuna = id_vacuna;
@@ -36,6 +32,20 @@ public class Vacuna {
         this.id_hijo = id_hijo;
         this.aplicada=aplicada;
     }
+
+    public Vacuna (){
+        id_vacuna = 0;
+        nombre = "";
+        dosis = 0;
+        edad = 0;
+        fecha = "";
+        lote = "";
+        nombre_medico = "";
+        descripcion = "";
+        id_hijo = "";
+        aplicada = 0;
+    }
+
 
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
@@ -146,8 +156,7 @@ public class Vacuna {
                 ", lote='" + lote + '\'' +
                 ", nombre_medico='" + nombre_medico + '\'' +
                 ", descripcion='" + descripcion + '\'' +
-                ", id_hijo='" +id_hijo + '\'' +
-                ", aplicada=" + aplicada +
-                '}';
+                ", id_hijo=" + id_hijo +
+                ", aplicada=" + aplicada +"}";
     }
 }

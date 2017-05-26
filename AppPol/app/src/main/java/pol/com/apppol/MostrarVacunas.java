@@ -70,14 +70,14 @@ public class MostrarVacunas extends AppCompatActivity implements AdapterView.OnI
         // Muestra el elemento seleccionado y pone los datos en la pantalla
         if(position == 0){
             Toast.makeText(parent.getContext(), "Seleccione un Filtro ", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             Toast.makeText(parent.getContext(), "Seleccionó: " + item, Toast.LENGTH_SHORT).show();
         }
         tab.removeAllViews();
         tabla = new Tabla(this, (TableLayout)findViewById(R.id.tabla));
         //
         if(position!=0) {
-            DbHelper x = new DbHelper(getApplicationContext(), "Hijo.db", null, 1);
+            DbHelper x = new DbHelper(getApplicationContext(), "Hijo.db", null, 1,"");
             //No modificar el warning
             elemento = x.llenar_lv(position, id_hijo);
             //
@@ -85,14 +85,13 @@ public class MostrarVacunas extends AppCompatActivity implements AdapterView.OnI
             tabla.agregarCabecera(R.array.cabecera_tabla);
             for (int i = 0; i < tamano; i++) {
                 ArrayList<String> elementos = new ArrayList<>();
-                //elementos.add(Integer.toString(elemento.get(i).getId_vacuna()));
                 elementos.add(elemento.get(i).getNombre());
                 elementos.add(elemento.get(i).getFecha());
                 //
                 if (elemento.get(i).getAplicada() == 0) {
-                    elementos.add("Si");
-                } else {
                     elementos.add("No");
+                } else {
+                    elementos.add("Si");
                 }
                 elementos.add(elemento.get(i).getNombre_medico());
                 tabla.agregarFilaTabla(elementos);
