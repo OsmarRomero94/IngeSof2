@@ -1,10 +1,18 @@
 package pol.com.apppol.data;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v7.app.NotificationCompat;
+import android.text.format.DateFormat;
 import android.util.Log;
 
 import org.apache.http.HttpResponse;
@@ -16,7 +24,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 
+import pol.com.apppol.R;
+import pol.com.apppol.hijo.HijoFragment;
+
+import static java.lang.Boolean.TRUE;
 import static pol.com.apppol.data.EstructuraHijo.HijoEntry;
 
 /*
@@ -27,9 +40,12 @@ public class DbHelper extends SQLiteOpenHelper{
     public static final String DATABASE_NAME = "Hijo.db";
     protected ArrayList<Hijo> hijoList = new ArrayList<>();
     protected ArrayList<Vacuna> vacList = new ArrayList<>();
-    public static String id_usuario;
-    public static String servidor = "http://192.168.43.11:8080";
 
+    String servidor = "http://10.13.14.10:8084";
+    public boolean cargada = false;
+    public boolean notificar = false;
+
+    public static String id_usuario;
     public DbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version, String id) {
         super(context, name, factory, version);
         this.id_usuario = id;
@@ -75,11 +91,15 @@ public class DbHelper extends SQLiteOpenHelper{
 
             cargarHijos(db);
             cargarVacunas(db);
+
+
         }catch (Exception e){
             System.out.println("Error al cargar tablas");
         }
     }
     private void obtenerHijosWS() {
+    /*aqui hay que cambiar la ip y el puerto en el que se ejecuta el web service*/
+
         String linkService = servidor + "/RestService/webresources/usuario/gethijos?userId=";
         HttpClient httpClient = new DefaultHttpClient();
         HttpGet del = new HttpGet(linkService+id_usuario);
@@ -116,6 +136,8 @@ public class DbHelper extends SQLiteOpenHelper{
     }
 
     private void obtenerRegistroWS() {
+         /*aqui hay que cambiar la ip y el puerto en el que se ejecuta el web service*/
+
         String linkService = servidor + "/RestService/webresources/usuario/getregistro?userId=";
         HttpClient httpClient = new DefaultHttpClient();
         HttpGet del = new HttpGet(linkService+id_usuario);
@@ -143,6 +165,8 @@ public class DbHelper extends SQLiteOpenHelper{
             Log.e("ServicioRest", "Error!", ex);
         }
     }
+
+
 
     private void cargarHijos(SQLiteDatabase sqLiteDatabase) {
         obtenerHijosWS();
@@ -237,11 +261,29 @@ public class DbHelper extends SQLiteOpenHelper{
                 vac=new Vacuna();
                 vac.setNombre(registros.getString(1));
                 vac.setFecha(registros.getString(4));
-                vac.setNombre_medico(registros.getString(6));
-                vac.setAplicada(registros.getInt(9));
                 lista.add(vac);
             }while(registros.moveToNext());
         }
         return lista;
+    }
+    public ArrayList obtener_fechas(){
+        ArrayList<String> fechas = new ArrayList<>();
+        String q;
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor registros;
+        try {
+            q = "SELECT fecha FROM Vacunas order by fecha;";
+            registros = database.rawQuery(q, null);
+
+            if (registros.moveToFirst()) {
+                do {
+                    fechas.add(registros.getString(0));
+                } while (registros.moveToNext());
+            }
+        }
+        catch (Exception e) {
+            e.getMessage();
+        }
+        return fechas;
     }
 }

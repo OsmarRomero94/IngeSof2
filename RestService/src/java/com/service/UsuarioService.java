@@ -84,23 +84,32 @@ public class UsuarioService {
         ArrayList<Hijo> lista = new ArrayList();
         conex = con.conectarBD();
         Statement st = conex.createStatement();
-        ResultSet rs = st.executeQuery("select id_hijo, nombre,apellido,sexo,fecha_nacimiento,"
-                + "lugar_nacimiento,nacionalidad,direccion,telefono_contacto,"
-                + "alergia from \"Hijos\" where id_usuario = "+userId+"");
+        String sql = "select nombre,apellido,fecha_nacimiento::varchar fecha,"
+                   + "lugar_nacimiento, id_hijo::varchar id_hijo, barrio, responsable,"
+                   + "sexo, direccion, nacionalidad, departamento, municipio, "
+                   + "referencia_domicilio, responsable, referencia_domicilio, "
+                   + "telefono_contacto, seguro_medico, alergia "
+                   + "from \"Hijos\" "
+                   + "where id_usuario = "+userId;
+        ResultSet rs = st.executeQuery(sql);
         while (rs.next()) {
             Hijo tm = new Hijo();
-            tm.setId_hijo(rs.getInt("id_hijo"));
+            tm.setId(rs.getString("id_hijo"));
             tm.setNombre(rs.getString("nombre"));
             tm.setApellido(rs.getString("apellido"));
             tm.setSexo(rs.getString("sexo"));
-            tm.setFecha_nacimiento(rs.getString("fecha_nacimiento"));
-            tm.setLugar_nacimiento(rs.getString("lugar_nacimiento"));
-            tm.setNacionalidad(rs.getString("nacionalidad"));
+            tm.setFechaNacimiento(rs.getString("fecha"));
+            tm.setLugarNacimiento(rs.getString("lugar_nacimiento"));
             tm.setDireccion(rs.getString("direccion"));
-            tm.setTelefono_contacto(rs.getString("telefono_contacto"));
+            tm.setNacionalidad(rs.getString("nacionalidad"));
+            tm.setMunicipio(rs.getString("municipio"));
+            tm.setDepartamento(rs.getString("departamento"));
+            tm.setBarrio(rs.getString("barrio"));
+            tm.setReferenciaDomicilio(rs.getString("referencia_domicilio"));
+            tm.setResponsable(rs.getString("responsable"));
+            tm.setTelefonoContacto(rs.getString("telefono_contacto"));
+            tm.setSeguroMedico(rs.getString("seguro_medico"));
             tm.setAlergia(rs.getString("alergia"));
-            
-            
             lista.add(tm);
         }
         conex.close();
@@ -109,26 +118,54 @@ public class UsuarioService {
     }
      //==========================================================================
     
-     public ArrayList<Registro> getRegistros(int usuarioId) throws SQLException, ClassNotFoundException {
+    public ArrayList<Registro> getRegistros(int userId) throws SQLException, ClassNotFoundException {
         ArrayList<Registro> lista = new ArrayList();
         conex = con.conectarBD();
         Statement st = conex.createStatement();
-        String sql = "select rv.id_vacuna,rv.id_hijo, rv.fecha, v.nombre, rv.id_registro, "
-                   + "rv.estado, rv.responsable, rv.dosis " 
-                   + "from \"Hijos\" h "
-                   + "join \"RegistroVacuna\" rv on rv.id_hijo = h.id_hijo " 
-                   + "join \"Vacunas\" v on v.id_vacuna = rv.id_vacuna " 
-                   + "where h.id_usuario = "+usuarioId;
+        String sql = "select rv.estado, coalesce(rv.fecha::varchar,'') fecha, v.nombre, "
+                   + "coalesce(rv.responsable,'') responsable, "
+                   + "v.id_vacuna, rv.id_hijo::varchar id_hijo, rv.dosis, rv.edad_meses, coalesce(rv.lote,'') lote "
+                   + "from \"RegistroVacuna\" rv "
+                   + "join \"Vacunas\" v on v.id_vacuna=rv.id_vacuna "
+                   + "join \"Hijos\" h on rv.id_hijo = h.id_hijo "
+                   + "where h.id_usuario = "+userId;
         ResultSet rs = st.executeQuery(sql);
         while (rs.next()) {
             Registro tm = new Registro();
-            tm.setId_vacuna(rs.getInt("id_vacuna"));
             tm.setNombreVacuna(rs.getString("nombre"));
             tm.setEstado(rs.getInt("estado"));
-            tm.setFecha(rs.getDate("fecha"));
+            tm.setFecha(rs.getString("fecha"));
             tm.setDosis(rs.getInt("dosis"));
-            tm.setHijoId(rs.getInt("id_hijo"));
+            tm.setEdad(rs.getInt("edad_meses"));
+            tm.setLote(rs.getString("lote"));
+            tm.setHijoId(rs.getString("id_hijo"));
+            tm.setVacunaId(rs.getInt("id_vacuna"));
             tm.setResponsable(rs.getString("responsable"));
+            
+            lista.add(tm);
+        }
+        conex.close();
+        con.cerrarBD();
+        return lista;
+    }
+    
+      public ArrayList<Fecha> getFechas(int userId) throws SQLException, ClassNotFoundException {
+        ArrayList<Fecha> lista = new ArrayList();
+        conex = con.conectarBD();
+        Statement st = conex.createStatement();
+        String sql = "select DISTINCT(coalesce(rv.fecha::varchar,'')) fecha "
+                  
+                   
+                   + "from \"RegistroVacuna\" rv "
+                   + "join \"Vacunas\" v on v.id_vacuna=rv.id_vacuna "
+                   + "join \"Hijos\" h on rv.id_hijo = h.id_hijo "
+                   + "where h.id_usuario = "+userId + "and rv.estado = 0";
+        ResultSet rs = st.executeQuery(sql);
+        while (rs.next()) {
+            Fecha tm = new Fecha();
+            
+            tm.setFecha(rs.getString("fecha"));
+            
             lista.add(tm);
         }
         conex.close();
@@ -140,7 +177,7 @@ public class UsuarioService {
     public Usuario getUserById(int id) throws ClassNotFoundException, SQLException {
         conex = con.conectarBD();
         Statement st = conex.createStatement();
-        ResultSet rs = st.executeQuery("select nombre,correo from \"Usuarios\" where id_usuario = "+id);
+        ResultSet rs = st.executeQuery("select nombre,correo from \"Usuarios\" where id = "+id);
         Usuario user = new Usuario();
         while (rs.next()) {
             user.setNombre(rs.getString("nombre"));

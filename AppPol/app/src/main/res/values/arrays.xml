@@ -5,7 +5,6 @@
        <!-- <item>ID Vacuna</item>-->
         <item>Nombre Vacuna</item>
         <item>Fecha a Aplicar</item>
-        <item>Aplicada</item>
-        <item>Doctor</item>
+
     </string-array>
 </resources>

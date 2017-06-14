@@ -224,7 +224,8 @@ public class SignInActivity extends AppCompatActivity implements
     }
 
     private class TareaWSObtenerID extends AsyncTask<String,Integer,Boolean> {
-        public static final String servidor="http://192.168.43.11:8080";
+        /*aqui hay que cambiar la ip y el puerto en el que se ejecuta el web service*/
+        public static final String servidor="http://10.13.14.10:8084";
         public static final String linkService =servidor+"/RestService/webresources/usuario/isuser?correo=";
         private String id_usuario;
         protected Boolean doInBackground(String... params) {

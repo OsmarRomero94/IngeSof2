@@ -9,26 +9,46 @@ import java.util.Date;
 
 /**
  *
- * @author jrgodoy
+ * @author CHRISTIANCS
  */
 public class Registro {
-    int id_vacuna;
     String nombreVacuna;
     int estado; //aplicada o no aplicada
-    Date fecha;
-    String responsable;
-    int hijoId;
+    String fecha;
     int dosis;
+    int edad;
+    String lote;
+    String responsable;
+    String hijoId;
+    int vacunaId;
+
+    public Registro(String nombreVacuna, int estado, String fecha, int dosis, int edad, 
+            String lote, String responsable, String hijoId) {
+        this.nombreVacuna = nombreVacuna;
+        this.estado = estado;
+        this.fecha = fecha;
+    }
     
     public Registro() {
-        id_vacuna = 0;
         nombreVacuna = "";
         estado = 0;
-        fecha = null;
-        responsable = "";
-        hijoId = 0;
+        fecha = "";
         dosis = 0;
+        edad = 0;
+        lote = "";
+        responsable = "";
+        hijoId = "";
+        vacunaId = 0;
     }
+
+    public int getVacunaId() {
+        return vacunaId;
+    }
+
+    public void setVacunaId(int vacunaId) {
+        this.vacunaId = vacunaId;
+    }
+
     public String getNombreVacuna() {
         return nombreVacuna;
     }
@@ -45,28 +65,12 @@ public class Registro {
         this.estado = estado;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
-    }
-
-    public String getResponsable() {
-        return responsable;
-    }
-
-    public void setResponsable(String responsable) {
-        this.responsable = responsable;
-    }
-
-    public int getHijoId() {
-        return hijoId;
-    }
-
-    public void setHijoId(int hijoId) {
-        this.hijoId = hijoId;
     }
 
     public int getDosis() {
@@ -77,15 +81,36 @@ public class Registro {
         this.dosis = dosis;
     }
 
-    public int getId_vacuna() {
-        return id_vacuna;
+    public int getEdad() {
+        return edad;
     }
 
-    public void setId_vacuna(int id_vacuna) {
-        this.id_vacuna = id_vacuna;
+    public void setEdad(int edad) {
+        this.edad = edad;
     }
-    
-    
-    
+
+    public String getLote() {
+        return lote;
+    }
+
+    public void setLote(String lote) {
+        this.lote = lote;
+    }
+
+    public String getResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(String responsable) {
+        this.responsable = responsable;
+    }
+
+    public String getHijoId() {
+        return hijoId;
+    }
+
+    public void setHijoId(String hijoId) {
+        this.hijoId = hijoId;
+    }
     
 }

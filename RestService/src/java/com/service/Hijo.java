@@ -1,60 +1,54 @@
 
 package com.service;
 
-import java.util.Date;
-
 /**
  *
  * @author Walton
  */
 public class Hijo {
-    int id_hijo;
+    String id;
     String nombre;
     String apellido;
     String sexo;
-    String fecha_nacimiento;
-    String lugar_nacimiento;
-    String nacionalidad;
+    String fechaNacimiento;
+    String lugarNacimiento;
     String direccion;
-    String telefono_contacto;
+    String nacionalidad;
+    String departamento;
+    String municipio;
+    String barrio; 
+    String referenciaDomicilio;
+    String responsable;
+    String telefonoContacto;
+    String seguroMedico;
     String alergia;
     
-
-    public Hijo(int id_hijo,String nombre, String apellido, String sexo, String fecha_nacimiento, 
-            String lugar_nacimiento,String nacionalidad,String direccion,String telefono_contacto,String alergia) {
-        this.id_hijo = id_hijo;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.sexo = sexo;
-        this.fecha_nacimiento = fecha_nacimiento;
-        this.lugar_nacimiento = lugar_nacimiento;
-        this.nacionalidad = nacionalidad;
-        this.direccion = direccion;
-        this.telefono_contacto = telefono_contacto;
-        this.alergia = alergia;
-    }
-    
     public Hijo() {
-        this.id_hijo = 0;
-        this.nombre = "";
-        this.apellido = "";
-        this.sexo = "";
-        this.fecha_nacimiento = null;
-        this.lugar_nacimiento = "";
-        this.nacionalidad = "";
-        this.direccion = "";
-        this.telefono_contacto = "";
-        this.alergia = "";
+        id = "";
+        nombre = "";
+        apellido = "";
+        sexo = "";
+        fechaNacimiento = "";
+        lugarNacimiento = "";
+        direccion = "";
+        nacionalidad = "";
+        departamento = "";
+        municipio = "";
+        barrio = "";
+        referenciaDomicilio = "";
+        responsable = "";
+        telefonoContacto = "";
+        seguroMedico = "";
+        alergia = "";
     }
 
-    public int getId_hijo() {
-        return id_hijo;
+    public String getId() {
+        return id;
     }
 
-    public void setId_hijo(int id_hijo) {
-        this.id_hijo = id_hijo;
+    public void setId(String id) {
+        this.id = id;
     }
-    
 
     public String getNombre() {
         return nombre;
@@ -80,28 +74,20 @@ public class Hijo {
         this.sexo = sexo;
     }
 
-    public String getFecha_nacimiento() {
-        return fecha_nacimiento;
+    public String getFechaNacimiento() {
+        return fechaNacimiento;
     }
 
-    public void setFecha_nacimiento(String fecha_nacimiento) {
-        this.fecha_nacimiento = fecha_nacimiento;
+    public void setFechaNacimiento(String fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
-    public String getLugar_nacimiento() {
-        return lugar_nacimiento;
+    public String getLugarNacimiento() {
+        return lugarNacimiento;
     }
 
-    public void setLugar_nacimiento(String lugar_nacimiento) {
-        this.lugar_nacimiento = lugar_nacimiento;
-    }
-
-    public String getNacionalidad() {
-        return nacionalidad;
-    }
-
-    public void setNacionalidad(String nacionalidad) {
-        this.nacionalidad = nacionalidad;
+    public void setLugarNacimiento(String lugarNacimiento) {
+        this.lugarNacimiento = lugarNacimiento;
     }
 
     public String getDireccion() {
@@ -112,12 +98,68 @@ public class Hijo {
         this.direccion = direccion;
     }
 
-    public String getTelefono_contacto() {
-        return telefono_contacto;
+    public String getNacionalidad() {
+        return nacionalidad;
     }
 
-    public void setTelefono_contacto(String telefono_contacto) {
-        this.telefono_contacto = telefono_contacto;
+    public void setNacionalidad(String nacionalidad) {
+        this.nacionalidad = nacionalidad;
+    }
+
+    public String getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(String departamento) {
+        this.departamento = departamento;
+    }
+
+    public String getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(String municipio) {
+        this.municipio = municipio;
+    }
+
+    public String getBarrio() {
+        return barrio;
+    }
+
+    public void setBarrio(String barrio) {
+        this.barrio = barrio;
+    }
+
+    public String getReferenciaDomicilio() {
+        return referenciaDomicilio;
+    }
+
+    public void setReferenciaDomicilio(String referenciaDomicilio) {
+        this.referenciaDomicilio = referenciaDomicilio;
+    }
+
+    public String getResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(String responsable) {
+        this.responsable = responsable;
+    }
+
+    public String getTelefonoContacto() {
+        return telefonoContacto;
+    }
+
+    public void setTelefonoContacto(String telefonoContacto) {
+        this.telefonoContacto = telefonoContacto;
+    }
+
+    public String getSeguroMedico() {
+        return seguroMedico;
+    }
+
+    public void setSeguroMedico(String seguroMedico) {
+        this.seguroMedico = seguroMedico;
     }
 
     public String getAlergia() {
@@ -127,9 +169,5 @@ public class Hijo {
     public void setAlergia(String alergia) {
         this.alergia = alergia;
     }
-
-   
     
-    
-
 }

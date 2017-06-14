@@ -88,12 +88,6 @@ public class MostrarVacunas extends AppCompatActivity implements AdapterView.OnI
                 elementos.add(elemento.get(i).getNombre());
                 elementos.add(elemento.get(i).getFecha());
                 //
-                if (elemento.get(i).getAplicada() == 0) {
-                    elementos.add("No");
-                } else {
-                    elementos.add("Si");
-                }
-                elementos.add(elemento.get(i).getNombre_medico());
                 tabla.agregarFilaTabla(elementos);
             }
         }

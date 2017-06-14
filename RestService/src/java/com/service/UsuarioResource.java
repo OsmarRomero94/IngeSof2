@@ -99,10 +99,20 @@ public class UsuarioResource {
     @GET
     @Path("/getregistro")
     @Produces(MediaType.APPLICATION_JSON)
-    public ArrayList<Registro> getRegistro(@QueryParam("userId") int hijoId) throws ClassNotFoundException, SQLException {
+    public ArrayList<Registro> getRegistro(@QueryParam("userId") int userId) throws ClassNotFoundException, SQLException {
         Usuario user = new Usuario();
         ArrayList<Registro> registros = new ArrayList();
-        registros = uservice.getRegistros(hijoId);
+        registros = uservice.getRegistros(userId);
+        return registros;
+    }
+    
+    @GET
+    @Path("/getfechas")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Fecha> getFecha(@QueryParam("userId") int userId) throws ClassNotFoundException, SQLException {
+        Usuario user = new Usuario();
+        ArrayList<Fecha> registros = new ArrayList();
+        registros = uservice.getFechas(userId);
         return registros;
     }
 }
