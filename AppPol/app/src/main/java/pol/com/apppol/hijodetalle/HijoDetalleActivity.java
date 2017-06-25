@@ -19,7 +19,7 @@ public class HijoDetalleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hijo_detalle);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //No modificar el warning
+        //NO MODIFICAR EL WARNING
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //Captura el id del hijo desde la clase HijoActivity
         id = getIntent().getStringExtra(HijoActivity.EXTRA_LAWYER_ID);

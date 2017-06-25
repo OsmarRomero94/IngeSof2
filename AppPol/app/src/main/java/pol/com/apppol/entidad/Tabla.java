@@ -101,7 +101,7 @@ public class Tabla {
     private int obtenerAnchoPixelesTexto(String texto){
         Paint p = new Paint();
         Rect bounds = new Rect();
-        p.setTextSize(44);
+        p.setTextSize(38);
         p.getTextBounds(texto, 0, texto.length(), bounds);
         return bounds.width();
     }

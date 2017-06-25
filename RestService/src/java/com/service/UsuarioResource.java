@@ -41,9 +41,11 @@ public class UsuarioResource {
         usuario.setCorreo(u.getCorreo());
         uservice.addUsuario(usuario);
         String result = "Usuario guardado: " + usuario.getNombre()+", "+usuario.getCorreo();
+        
         return result;
     }
     //==========================================================================
+    
     
     @DELETE
     @Path("/deleteuser")
@@ -75,34 +77,38 @@ public class UsuarioResource {
         return user;
     }
     //==========================================================================
-    @GET
+    @POST
     @Path("/isuser")
-    @Produces("text/plain")
-    public String isUser(@QueryParam("correo") String correo) throws ClassNotFoundException, SQLException {
-        String result;
-        result = uservice.isUser(correo);
-        return result;
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Usuario isUser(Usuario u) throws ClassNotFoundException, SQLException {
+        Usuario user = new Usuario();
+        user = uservice.isUser(u.getCorreo());
+       
+        return user;
     }
     //==========================================================================
     
-    @GET
+    @POST
     @Path("/gethijos")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ArrayList<Hijo> getHijos(@QueryParam("userId") int userId) throws ClassNotFoundException, SQLException {
+    public ArrayList<Hijo> getHijos(Usuario u) throws ClassNotFoundException, SQLException {
         Usuario user = new Usuario();
         ArrayList<Hijo> hijos = new ArrayList();
-        hijos = uservice.getHijos(userId);
+        hijos = uservice.getHijos(u.getId_usuario());
         return hijos;
     }
      //==========================================================================
     
-    @GET
+    @POST
     @Path("/getregistro")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ArrayList<Registro> getRegistro(@QueryParam("userId") int userId) throws ClassNotFoundException, SQLException {
+    public ArrayList<Registro> getRegistro(Usuario u) throws ClassNotFoundException, SQLException {
         Usuario user = new Usuario();
         ArrayList<Registro> registros = new ArrayList();
-        registros = uservice.getRegistros(userId);
+        registros = uservice.getRegistros(u.getId_usuario());
         return registros;
     }
     

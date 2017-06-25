@@ -7,31 +7,17 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
-import android.util.Log;
-import android.widget.Toast;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 import pol.com.apppol.R;
-import pol.com.apppol.SignInActivity;
 import pol.com.apppol.data.DbHelper;
-import pol.com.apppol.data.Fecha;
-import pol.com.apppol.data.Hijo;
 
 import static java.lang.Boolean.TRUE;
 
@@ -41,9 +27,7 @@ public class HijoActivity extends AppCompatActivity {
     protected String id_usuario;
     public static boolean cargada = false;
     public static boolean notificar = false;
-    String servidor = "http://10.13.14.10:8084";
     ArrayList<String> fechas = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,16 +48,11 @@ public class HijoActivity extends AppCompatActivity {
                     .add(R.id.hijo_container, fragment)
                     .commit();
         }
-
+        //Notificaciones al entrar en la app
         if (!cargada) {
             DbHelper x = new DbHelper(getApplicationContext(), "Hijo.db", null, 1,"");
-            //No modificar el warning
+            //Calculo de vacunas proximas traidas del webService - No modificar el warning
             fechas = x.obtener_fechas();
-            ////alculo de vacuna proxima //Aca falta un metodo que agarre las fechas de la bd
-           String[] fechasVacunas = {
-                    "2017-06-10",
-                   };
-
             Date d = new Date();
             CharSequence fechaActual = DateFormat.format("yyyy-MM-dd", d.getTime());
             for (int i = 0; i<fechas.size();i++) {

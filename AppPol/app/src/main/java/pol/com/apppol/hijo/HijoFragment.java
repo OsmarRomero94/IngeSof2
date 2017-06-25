@@ -1,20 +1,11 @@
 package pol.com.apppol.hijo;
 
 import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +13,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import pol.com.apppol.R;
-import pol.com.apppol.SignInActivity;
 import pol.com.apppol.data.DbHelper;
 import pol.com.apppol.hijodetalle.HijoDetalleActivity;
 
-import static android.content.Context.NOTIFICATION_SERVICE;
-import static java.lang.Boolean.TRUE;
 import static pol.com.apppol.data.EstructuraHijo.HijoEntry;
 
 /**
@@ -46,6 +34,7 @@ public class HijoFragment extends Fragment {
     }
 
     public static HijoFragment newInstance() {
+        // newInstance
         return new HijoFragment();
     }
 
@@ -56,7 +45,6 @@ public class HijoFragment extends Fragment {
         // Referencias UI
         ListView mLawyersList = (ListView) root.findViewById(R.id.hijo_list);
         mLawyersAdapter = new HijoCursorAdapter(getActivity(), null);
-
         // Setup
         mLawyersList.setAdapter(mLawyersAdapter);
         // Eventos
@@ -89,6 +77,7 @@ public class HijoFragment extends Fragment {
     }
 
     private void loadHijos() {
+        //Carga de hijos
         new HijosLoadTask().execute();
     }
 

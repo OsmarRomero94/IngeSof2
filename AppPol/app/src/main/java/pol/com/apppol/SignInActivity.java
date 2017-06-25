@@ -3,10 +3,8 @@ package pol.com.apppol;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -25,16 +23,12 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Objects;
+import org.json.JSONObject;
 
 import pol.com.apppol.hijo.HijoActivity;
 
@@ -53,6 +47,11 @@ public class SignInActivity extends AppCompatActivity implements
     private TextView mStatusTextView;
     private TextView mCorreoTextView;
     private ProgressDialog mProgressDialog;
+
+    //AQUI HAY QUE CAMBIAR LA IP Y EL PUERTO DONDE SE EJECUTA EL WEB SERVICE
+    public static final String servidor="http://192.168.43.11:8084";
+    //RECORDAR CAMBIAR LINEA DE ARRIBA Y EN DbHelper.java
+
     String correoUsuario;
 
     @Override
@@ -224,37 +223,33 @@ public class SignInActivity extends AppCompatActivity implements
     }
 
     private class TareaWSObtenerID extends AsyncTask<String,Integer,Boolean> {
-        /*aqui hay que cambiar la ip y el puerto en el que se ejecuta el web service*/
-        public static final String servidor="http://10.13.14.10:8084";
-        public static final String linkService =servidor+"/RestService/webresources/usuario/isuser?correo=";
+        static final String linkService =servidor+"/RestService/webresources/usuario/isuser";
         private String id_usuario;
         protected Boolean doInBackground(String... params) {
+            JSONObject jsonParam = new JSONObject();
             boolean resultado = false;
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpGet del = new HttpGet(linkService + correoUsuario);
-            del.setHeader("content-type", "text/plain");
-
             try {
-                HttpResponse response = httpClient.execute(del);
-                if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                    InputStream instream = response.getEntity().getContent();
-                    BufferedReader r = new BufferedReader(new InputStreamReader(
-                            instream), 8000);
-                    StringBuilder total = new StringBuilder();
-                    String line;
-                    while ((line = r.readLine()) != null) {
-                        total.append(line);
-                    }
-                    instream.close();
-                    id_usuario = total.toString();
-                    if (!id_usuario.equals("0")) {
-                        resultado= true;
-                    }
+                jsonParam.put("correo", correoUsuario);
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpPost del = new HttpPost(linkService);
+                del.setHeader("Accept", "application/json");
+                del.setHeader("Content-type", "application/json");
+                StringEntity se = new StringEntity(jsonParam.toString());
+                del.setEntity(se);
+                //
+                HttpResponse resp = httpClient.execute(del);
+                String respStr = EntityUtils.toString(resp.getEntity());
+                JSONObject obj = new JSONObject(respStr);
+                if (obj != null) {
+                    id_usuario = obj.getString("id_usuario");
+                    resultado = true;
+                }
+                else {
+                    resultado = false;
                 }
             } catch (Exception ex) {
                 Log.e("ServicioRest", "Error!", ex);
             }
-            //
             return resultado;
         }
 
@@ -264,8 +259,7 @@ public class SignInActivity extends AppCompatActivity implements
                 intent.putExtra("id_usuario", id_usuario);
                 startActivity(intent);
             }else{
-                Toast toast1 = Toast.makeText(getApplicationContext(),
-                                "Correo no registrado", Toast.LENGTH_SHORT);
+                Toast toast1 = Toast.makeText(getApplicationContext(), "Correo no registrado", Toast.LENGTH_SHORT);
                 toast1.show();
             }
         }

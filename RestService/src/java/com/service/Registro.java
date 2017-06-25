@@ -27,6 +27,7 @@ public class Registro {
         this.nombreVacuna = nombreVacuna;
         this.estado = estado;
         this.fecha = fecha;
+        
     }
     
     public Registro() {

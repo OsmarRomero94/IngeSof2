@@ -78,7 +78,7 @@ public class MostrarVacunas extends AppCompatActivity implements AdapterView.OnI
         //
         if(position!=0) {
             DbHelper x = new DbHelper(getApplicationContext(), "Hijo.db", null, 1,"");
-            //No modificar el warning
+            //NO MODIFICAR EL WARNING
             elemento = x.llenar_lv(position, id_hijo);
             //
             int tamano = elemento.size();

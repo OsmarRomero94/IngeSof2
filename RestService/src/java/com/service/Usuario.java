@@ -6,6 +6,7 @@ package com.service;
  * @author jrgodoy
  */
 public class Usuario {
+    private int id_usuario;
     private String nombre;
     private String correo;
 
@@ -23,6 +24,14 @@ public class Usuario {
 
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    public int getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(int id_usuario) {
+        this.id_usuario = id_usuario;
     }
     
     

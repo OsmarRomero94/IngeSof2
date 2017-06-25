@@ -189,15 +189,19 @@ public class UsuarioService {
     }
     //==========================================================================
     
-    public String isUser(String correo) throws ClassNotFoundException, SQLException {
+    public Usuario isUser(String correo) throws ClassNotFoundException, SQLException {
         conex = con.conectarBD();
+        Usuario user = new Usuario();
         Statement st = conex.createStatement();
-        ResultSet rs = st.executeQuery("select id_usuario from \"Usuarios\" where correo = '"+correo+"'");
+        ResultSet rs = st.executeQuery("select id_usuario, nombre, correo from \"Usuarios\" where correo = '"+correo+"'");
         if (rs.next()) {
-            return rs.getString(1);
+            user.setId_usuario(rs.getInt(1));
+            user.setNombre(rs.getString(2));
+            user.setCorreo(rs.getString(3));
         }
         else {
-            return "0";
-        }      
+            user = null;
+        }
+        return user;
     }
 }

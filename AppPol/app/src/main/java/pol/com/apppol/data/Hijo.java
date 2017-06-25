@@ -68,8 +68,6 @@ public class Hijo {
         this.alergias = alergias;
     }
 
-
-
     public Hijo(Cursor cursor) {
         id = cursor.getString(cursor.getColumnIndex(HijoEntry.ID));
         nombre = cursor.getString(cursor.getColumnIndex(HijoEntry.NOMBRE));
@@ -87,8 +85,6 @@ public class Hijo {
         telefono_contacto = cursor.getString(cursor.getColumnIndex(HijoEntry.TELEFONO_CONTACTO));
         seguro_medico = cursor.getString(cursor.getColumnIndex(HijoEntry.SEGURO_MEDICO));
         alergias = cursor.getString(cursor.getColumnIndex(HijoEntry.ALERGIAS));
-
-
     }
 
     public ContentValues toContentValues() {
@@ -99,19 +95,16 @@ public class Hijo {
         values.put(HijoEntry.FECHA_NACIMIENTO, fecha_nacimiento);
         values.put(HijoEntry.LUGAR_NACIMIENTO, lugar_nacimiento);
         values.put(HijoEntry.SEXO, sexo);
-
         values.put(HijoEntry.NACIONALIDAD, nacionalidad);
         values.put(HijoEntry.DIRECCION, direccion);
         values.put(HijoEntry.DEPARTAMENTO, departamento);
         values.put(HijoEntry.MUNICIPIO, municipio);
         values.put(HijoEntry.BARRIO, barrio);
         values.put(HijoEntry.REFERENCIA_DOMICILIO, referencia_domicilio);
-
         values.put(HijoEntry.RESPONSABLE, responsable);
         values.put(HijoEntry.TELEFONO_CONTACTO, telefono_contacto);
         values.put(HijoEntry.SEGURO_MEDICO, seguro_medico);
         values.put(HijoEntry.ALERGIAS, alergias);
-
         return values;
     }
 

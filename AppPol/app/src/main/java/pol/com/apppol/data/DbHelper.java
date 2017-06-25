@@ -1,35 +1,22 @@
 package pol.com.apppol.data;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.support.v7.app.NotificationCompat;
-import android.text.format.DateFormat;
 import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 
-import pol.com.apppol.R;
-import pol.com.apppol.hijo.HijoFragment;
-
-import static java.lang.Boolean.TRUE;
 import static pol.com.apppol.data.EstructuraHijo.HijoEntry;
 
 /*
@@ -38,21 +25,21 @@ import static pol.com.apppol.data.EstructuraHijo.HijoEntry;
 
 public class DbHelper extends SQLiteOpenHelper{
     public static final String DATABASE_NAME = "Hijo.db";
-    protected ArrayList<Hijo> hijoList = new ArrayList<>();
-    protected ArrayList<Vacuna> vacList = new ArrayList<>();
+    private ArrayList<Hijo> hijoList = new ArrayList<>();
+    private ArrayList<Vacuna> vacList = new ArrayList<>();
+    private static String id_usuario;
 
-    String servidor = "http://10.13.14.10:8084";
-    public boolean cargada = false;
-    public boolean notificar = false;
+    //AQUI HAY QUE CAMBIAR LA IP Y EL PUERTO DONDE SE EJECUTA EL WEBSERVICE
+    private String servidor = "http://192.168.43.11:8084";
+    //RECORDAR CAMBIAR LINEA DE ARRIBA Y EN SignInActivity.java
 
-    public static String id_usuario;
     public DbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version, String id) {
         super(context, name, factory, version);
         this.id_usuario = id;
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) { //HijoEntry.TABLE_NAME = "hijo"
+    public void onCreate(SQLiteDatabase db) {
         try {
             db.execSQL(
                     "CREATE TABLE " + HijoEntry.TABLE_NAME + " ("
@@ -88,23 +75,26 @@ public class DbHelper extends SQLiteOpenHelper{
                             "aplicada INTEGER," +
                             "PRIMARY KEY (id_vacuna, id_hijo,dosis)," +
                             "FOREIGN KEY(id_hijo) REFERENCES hijo(id_hijo));");
-
+            //Empezar carga de datos
             cargarHijos(db);
             cargarVacunas(db);
-
-
+            //
         }catch (Exception e){
             System.out.println("Error al cargar tablas");
         }
     }
     private void obtenerHijosWS() {
-    /*aqui hay que cambiar la ip y el puerto en el que se ejecuta el web service*/
-
-        String linkService = servidor + "/RestService/webresources/usuario/gethijos?userId=";
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpGet del = new HttpGet(linkService+id_usuario);
-        del.setHeader("content-type", "application/json");
+        String linkService = servidor + "/RestService/webresources/usuario/gethijos";
         try {
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost del = new HttpPost(linkService);
+            del.setHeader("Accept", "application/json");
+            del.setHeader("Content-type", "application/json");
+            JSONObject jsonParam = new JSONObject();
+            jsonParam.put("id_usuario", id_usuario);
+            StringEntity se = new StringEntity(jsonParam.toString());
+            del.setEntity(se);
+            //
             HttpResponse resp = httpClient.execute(del);
             String respStr = EntityUtils.toString(resp.getEntity());
             JSONArray respJSON = new JSONArray(respStr);
@@ -136,13 +126,17 @@ public class DbHelper extends SQLiteOpenHelper{
     }
 
     private void obtenerRegistroWS() {
-         /*aqui hay que cambiar la ip y el puerto en el que se ejecuta el web service*/
-
         String linkService = servidor + "/RestService/webresources/usuario/getregistro?userId=";
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpGet del = new HttpGet(linkService+id_usuario);
-        del.setHeader("content-type", "application/json");
         try {
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost del = new HttpPost(linkService);
+            del.setHeader("Accept", "application/json");
+            del.setHeader("Content-type", "application/json");
+            JSONObject jsonParam = new JSONObject();
+            jsonParam.put("id_usuario", id_usuario);
+            StringEntity se = new StringEntity(jsonParam.toString());
+            del.setEntity(se);
+            //
             HttpResponse resp = httpClient.execute(del);
             String respStr = EntityUtils.toString(resp.getEntity());
             JSONArray respJSON = new JSONArray(respStr);
@@ -166,8 +160,6 @@ public class DbHelper extends SQLiteOpenHelper{
         }
     }
 
-
-
     private void cargarHijos(SQLiteDatabase sqLiteDatabase) {
         obtenerHijosWS();
         for (int i = 0; i <hijoList.size(); i++) {
@@ -182,7 +174,6 @@ public class DbHelper extends SQLiteOpenHelper{
 
     private void cargarVacunas(SQLiteDatabase sqLiteDatabase) {
         obtenerRegistroWS();
-        //Vacunas para hijo id 1
         for (int i = 0; i < vacList.size(); i++) {
             insertarVacuna(sqLiteDatabase, new Vacuna(vacList.get(i).getId_vacuna(),
                     vacList.get(i).getNombre(),vacList.get(i).getDosis(),vacList.get(i).getEdad(),
@@ -190,7 +181,6 @@ public class DbHelper extends SQLiteOpenHelper{
                     vacList.get(i).getDescripcion(),vacList.get(i).getId_hijo(),vacList.get(i).getAplicada()));
         }
     }
-
 
     private long insertarHijo(SQLiteDatabase db, Hijo lawyer) {
         return db.insert(
@@ -238,6 +228,7 @@ public class DbHelper extends SQLiteOpenHelper{
         String q;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor registros;
+        //NO MODIFICAR WARNINGS
         if (orden==0){
             q = "SELECT * FROM Vacunas where id_hijo=?;";
             registros= database.rawQuery(q, new String[]{id_hijo});
@@ -254,7 +245,7 @@ public class DbHelper extends SQLiteOpenHelper{
             q = "SELECT * FROM Vacunas where id_hijo=? order by fecha;";
             registros = database.rawQuery(q, new String[]{id_hijo});
         }
-
+        //
         Vacuna vac;
         if(registros.moveToFirst()){
             do{
@@ -266,15 +257,16 @@ public class DbHelper extends SQLiteOpenHelper{
         }
         return lista;
     }
+
     public ArrayList obtener_fechas(){
         ArrayList<String> fechas = new ArrayList<>();
         String q;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor registros;
+        //NO MODIFICAR WARNINGS
         try {
             q = "SELECT fecha FROM Vacunas order by fecha;";
             registros = database.rawQuery(q, null);
-
             if (registros.moveToFirst()) {
                 do {
                     fechas.add(registros.getString(0));
